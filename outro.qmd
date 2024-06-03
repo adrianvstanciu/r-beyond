@@ -1,0 +1,29 @@
+# Parting words {#sec-outro}
+
+This short book introduces the basics to getting started with using _R_ beyond data analysis. 
+
+The book promotes an integrated workflow where `r` has a pivotal role. With the help of `r` and the associated tools, such as `RStudio` and `GitHub`, we have seen how we can create automatized reports to reduce repetitive tasks (@sec-autom). We have also seen that we can create our own websites and publish online books (@sec-publish). Finally, we have also seen that we can write web applications to engage with our audience (@sec-apps).
+
+Taken together, and in due time, one can create for oneself a work routine that from the start adheres to open science practicies and in so doing makes their own work reproducible, transparent, and publically available. 
+
+_R_ is a powerful programming language that can help in transitioning from close-ended data analysis software such as SPSS to programming-based data analysis. One benefit of this is that through `r` one can discover a universe of new possibilities -- for example, linking data analysis with communication strategies. 
+
+`r` is but one of the possible programming languages. The more one becomes accustomed with a programming-based logic in handling data, the easier it gets to integrate other programming languages into their workflow. For example, through their integrated development environment (IDE) of choice -- in this case we've used `RStudio`. 
+
+`RStudio` facilitates the seamless integration of various programming languages (e.g., `r`, `python`, `Julia`) in enhanced documents (e.g., `RMarkdown`, `Quarto`) from which powerful and dynamic output files can be generated.
+
+This short book was meant as a beginner's guide. Throughout the book advanced resources have been introduced. 
+
+And remember...
+
+> Begin small but, aim high.
+
+## Advanced resources {-}
+
+If you still are not convinced of how powerful _R_ can be, then what about this: You can create art using `r`. That is right! There are several packages available that can help you get in touch with your creative side while not ignoring your love for data!
+
+![Example of `r` generated art using the package aRtsy. ](img/rart.png){.lightbox width=75%}
+
+`aRtsy` package is downloadable as [explained here](https://koenderks.github.io/aRtsy/) and attributed to @Derks2023.
+
+**Danielle Navarro** provides a workshop for art from code using _R_: [see here](https://art-from-code.netlify.app/).

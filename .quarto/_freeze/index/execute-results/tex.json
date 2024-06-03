@@ -1,0 +1,21 @@
+{
+  "hash": "7b4944538916cb4bee8202f75ce173bf",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Preface {.unnumbered}\n\n\n\n\n\n\n\n# {-}\n\nThe book is divided into several chapters as follows:\n\n- Chapter @sec-intro: This is an introduction to the purpose and mission of this seminar, and provides useful information to get one started.\n- Chapter @sec-runiv: This part is a gentle introduction in the `r` universe.\n- Chapter @sec-autom: This part addresses the notion of automatization of workflows.\n- Chapter @sec-publish: This part provides tips on self-publishing content online.\n- Chapter @sec-apps: This part introduces shiny-apps as tools for communicating research output.\n- Chapter @sec-outro: This is an overview of the learned material and contains some tips for individual work.\n\nTo illustrate the benefits of working with _R_ beyond data analysis while transitioning to a holistic work flow, we will build on an example that evolves throughout the chapters @sec-autom--@sec-apps. \n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {
+      "knitr": [
+        "{\"type\":\"list\",\"attributes\":{},\"value\":[]}"
+      ]
+    },
+    "preserve": null,
+    "postProcess": false
+  }
+}

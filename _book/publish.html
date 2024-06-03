@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course material for the seminar.">
+
+<title>R beyond data analysis - 4&nbsp; Self-publish</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./apps.html" rel="next">
+<link href="./autom.html" rel="prev">
+<link href="./img/logo.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta name="citation_title" content="[[4]{.chapter-number}&nbsp; [Self-publish]{.chapter-title}]{#sec-publish .quarto-section-identifier}">
+<meta name="citation_language" content="en">
+<meta name="citation_reference" content="citation_title=Dynamic documents with R and knitr;,citation_author=Yihui Xie;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=http://yihui.name/knitr/;">
+<meta name="citation_reference" content="citation_title=Within-culture variation in the content of stereotypes: Application and development of the stereotype content model in an eastern european culture;,citation_author=A. Stanciu;,citation_author=C. J. Cohrs;,citation_author=K. Hanke;,citation_author=A. Gavreliuc;,citation_publication_date=2017;,citation_cover_date=2017;,citation_year=2017;,citation_issue=5;,citation_doi=10.1080/00224545.2016.1262812;,citation_volume=157;,citation_journal_title=The Journal of Social Psychology;">
+<meta name="citation_reference" content="citation_title=Extending the theory of planned behavior: A review and avenues for further research;,citation_author=M. Conner;,citation_author=Christopher J. Armitage;,citation_publication_date=1998;,citation_cover_date=1998;,citation_year=1998;,citation_issue=15;,citation_doi=10.1111/j.1559-1816.1998.tb01685.x;,citation_volume=28;,citation_journal_title=Journal of Applied Social Psychology;">
+<meta name="citation_reference" content="citation_title=Predicted as observed? How to identify empirically adequate theoretical constructs;,citation_author=undefined Witte;,citation_author=undefined Stanciu;,citation_author=F. Zenker;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_doi=10.3389/fpsyg.2022.980261;,citation_volume=13;,citation_journal_title=Frontiers in Psychology;">
+<meta name="citation_reference" content="citation_title=Error theory of mental test scores without and with a measurement instrument;,citation_author=undefined Witte;,citation_author=A. Stanciu;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://doi.org/10.31219/osf.io/9ap6m;">
+<meta name="citation_reference" content="citation_title=R: A language and environment for statistical computing;,citation_author=R Core Team;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://www.R-project.org/;">
+<meta name="citation_reference" content="citation_title=Bookdown: Authoring books and technical documents with r markdown;,citation_author=Yihui Xie;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://github.com/rstudio/bookdown;">
+<meta name="citation_reference" content="citation_title=Knitr: A general-purpose package for dynamic report generation in r;,citation_author=Yihui Xie;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://yihui.org/knitr/;">
+<meta name="citation_reference" content="citation_title=Rmarkdown: Dynamic documents for r;,citation_author=JJ Allaire;,citation_author=Yihui Xie;,citation_author=Christophe Dervieux;,citation_author=Jonathan McPherson;,citation_author=Javier Luraschi;,citation_author=Kevin Ushey;,citation_author=Aron Atkins;,citation_author=Hadley Wickham;,citation_author=Joe Cheng;,citation_author=Winston Chang;,citation_author=Richard Iannone;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://github.com/rstudio/rmarkdown;">
+<meta name="citation_reference" content="citation_title=Bookdown: Authoring books and technical documents with R markdown;,citation_author=Yihui Xie;,citation_publication_date=2016;,citation_cover_date=2016;,citation_year=2016;,citation_fulltext_html_url=https://bookdown.org/yihui/bookdown;,citation_isbn=978-1138700109;">
+<meta name="citation_reference" content="citation_title=Dynamic documents with R and knitr;,citation_author=Yihui Xie;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=https://yihui.org/knitr/;">
+<meta name="citation_reference" content="citation_title=Knitr: A comprehensive tool for reproducible research in R;,citation_author=Yihui Xie;,citation_editor=Victoria Stodden;,citation_editor=Friedrich Leisch;,citation_editor=Roger D. Peng;,citation_publication_date=2014;,citation_cover_date=2014;,citation_year=2014;,citation_inbook_title=Implementing reproducible computational research;">
+<meta name="citation_reference" content="citation_title=R markdown: The definitive guide;,citation_author=Yihui Xie;,citation_author=J. J. Allaire;,citation_author=Garrett Grolemund;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=https://bookdown.org/yihui/rmarkdown;,citation_isbn=9781138359338;">
+<meta name="citation_reference" content="citation_title=R markdown cookbook;,citation_author=Yihui Xie;,citation_author=Christophe Dervieux;,citation_author=Emily Riederer;,citation_publication_date=2020;,citation_cover_date=2020;,citation_year=2020;,citation_fulltext_html_url=https://bookdown.org/yihui/rmarkdown-cookbook;,citation_isbn=9780367563837;">
+<meta name="citation_reference" content="citation_title=aRtsy: Generative art with ’ggplot2’;,citation_author=Koen Derks;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://CRAN.R-project.org/package=aRtsy;">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./publish.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Self-publish</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R beyond data analysis</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-save"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./data/sample.sav">
+            Stereotype data .sav
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/movies.xlsx">
+            Actor data .xlsx
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/Examples rmd.zip">
+            Examples .rmd
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/Example book.zip">
+            Example book
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/Example shiny.zip">
+            Example shiny
+            </a>
+          </li>
+      </ul>
+    </div>
+    <a href="./R-beyond-data-analysis.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">General introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./runiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R universe</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./autom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Automatization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./publish.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Self-publish</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shiny apps</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./outro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Parting words</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prepping-quarto" id="toc-prepping-quarto" class="nav-link active" data-scroll-target="#prepping-quarto">Prepping Quarto</a></li>
+  <li><a href="#website" id="toc-website" class="nav-link" data-scroll-target="#website">Website</a>
+  <ul class="collapse">
+  <li><a href="#qmd" id="toc-qmd" class="nav-link" data-scroll-target="#qmd"><span class="header-section-number">4.0.1</span> .qmd</a></li>
+  <li><a href="#yml" id="toc-yml" class="nav-link" data-scroll-target="#yml"><span class="header-section-number">4.0.2</span> .yml</a></li>
+  <li><a href="#css" id="toc-css" class="nav-link" data-scroll-target="#css"><span class="header-section-number">4.0.3</span> .css</a></li>
+  <li><a href="#site-folder" id="toc-site-folder" class="nav-link" data-scroll-target="#site-folder"><span class="header-section-number">4.0.4</span> _site folder</a></li>
+  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment"><span class="header-section-number">4.0.5</span> Deployment</a></li>
+  </ul></li>
+  <li><a href="#online-book" id="toc-online-book" class="nav-link" data-scroll-target="#online-book">Online book</a>
+  <ul class="collapse">
+  <li><a href="#qmd-1" id="toc-qmd-1" class="nav-link" data-scroll-target="#qmd-1"><span class="header-section-number">4.0.6</span> .qmd</a></li>
+  <li><a href="#yml-1" id="toc-yml-1" class="nav-link" data-scroll-target="#yml-1"><span class="header-section-number">4.0.7</span> .yml</a></li>
+  <li><a href="#bib" id="toc-bib" class="nav-link" data-scroll-target="#bib"><span class="header-section-number">4.0.8</span> .bib</a></li>
+  <li><a href="#deployment-1" id="toc-deployment-1" class="nav-link" data-scroll-target="#deployment-1"><span class="header-section-number">4.0.9</span> Deployment</a></li>
+  </ul></li>
+  <li><a href="#advanced-resources" id="toc-advanced-resources" class="nav-link" data-scroll-target="#advanced-resources">Advanced resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-publish" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Self-publish</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/selfpublish.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="img/selfpublish.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></a></p>
+</figure>
+</div>
+<p>Publishing content online is very easy today. One can use WordPress and similar platforms to create a website, blogs and so on.</p>
+<p>Why, then, use <code>r</code> to publish content online?</p>
+<p>Through <em>R</em> we can create websites and online books that we can store on online repositories like <code>GitHub</code> and maintain a high degree of control over the structure, contents, and visibility of the website/ book. Moreover, self-publishing using <code>r</code> is one way to integrate varying work-routines towards a greater goal – that of communicating own research, consultancy job involving data science, to name just a few examples.</p>
+<p>If you work with data that comes from your data collection efforts or you use secondary data (publically available data), then self-publishing content online through <code>r</code> can facilitate the integration of data analysis and content creation steps.</p>
+<p>For this section, we will use <code>quarto</code> to create both websites and books. Using <code>quarto</code> is a step forward from other approaches (<code>quarto</code> is a new generation RMarkdown document), including the way the present book was rendered - using the old generation RMarkdown files.</p>
+<section id="prepping-quarto" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="prepping-quarto">Prepping Quarto</h2>
+<p><code>Quarto</code> is a new generation <code>RMarkdown</code>. It retains all the functions of the RMarkdown files from before while it enhances and simplifies several other work flows. Basically, <code>Quarto</code> makes it much much much easier for everyone to create presentations, live documents, websites, books and so on.</p>
+<p>One can even integrate <code>shiny</code> functionality into <code>Quarto</code> documents. For the present seminar, however, we will introduce <code>shiny apps</code> as separate tools (see <a href="apps.html" class="quarto-xref"><span>Chapter 5</span></a>).</p>
+<p>See the official <code>quarto</code> website <a href="https://quarto.org/">here</a>.</p>
+<p>To create content using <code>quarto</code> we need:</p>
+<p>1 - <code>r</code>, which we download and install as described in <a href="runiv.html" class="quarto-xref"><span>Chapter 2</span></a>.</p>
+<p>2 - <code>RStudio</code>, which we download and install as described in <a href="runiv.html" class="quarto-xref"><span>Chapter 2</span></a>.</p>
+<p>3 - <code>Quarto</code>, which can be downloaded <a href="https://quarto.org/docs/get-started/">here</a> and installed following the indicated steps. Make sure you choose the installation package that suits your operating system.</p>
+<p>After you’ve successfully installed <code>r</code>, <code>RStudio</code>, and <code>quarto</code> on your computer, we can start with creating websites and books.</p>
+</section>
+<section id="website" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="website">Website</h2>
+<p>In <a href="autom.html" class="quarto-xref"><span>Chapter 3</span></a>, we’ve seen that working in <code>Rproj</code> simplifies the work flow including, for example, presetting path dependencies relative to the project folder.</p>
+<div id="fig-qwebsite" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qwebsite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qwebsite" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-step1qweb" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-step1qweb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/qweb1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="fig-qwebsite"><img src="img/qweb1.png" class="img-fluid figure-img" style="width:75.0%" data-ref-parent="fig-qwebsite"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-step1qweb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Step 1
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qwebsite" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-step2qweb" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-step2qweb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/qweb2.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="fig-qwebsite"><img src="img/qweb2.png" class="img-fluid figure-img" style="width:75.0%" data-ref-parent="fig-qwebsite"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-step2qweb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Step 2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qwebsite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: Steps to creating a Quarto Website project
+</figcaption>
+</figure>
+</div>
+<p>We will use the logic of projects here (and for books) as well. Open <code>RStudio</code> and create a new project <code>Quarto website</code>. See <a href="#fig-qwebsite" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>.</p>
+<p>When you create the project, there will be several files created by default: <code>.qmd</code>, <code>.yml</code>, <code>.css</code> as well as a folder “_site”. The files and folder already contain the fundamental structure of a working website.</p>
+<p>To open this default website on your local computer, navigate inside the folder “_site” and open on your Internet browser the <code>.html</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> file <code>index.html</code>.</p>
+<p>Every website (and online book) has such an <code>index.html</code> file. This file indexes the other files composing the website (or book).</p>
+<section id="qmd" class="level3" data-number="4.0.1">
+<h3 data-number="4.0.1" class="anchored" data-anchor-id="qmd"><span class="header-section-number">4.0.1</span> .qmd</h3>
+<div id="fig-indexqmd" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-indexqmd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/index.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="img/index.png" class="img-fluid figure-img" style="width:75.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-indexqmd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Basic structure of a .qmd file
+</figcaption>
+</figure>
+</div>
+<p>We can see the by now familiar structure including the yaml header at lines 1-3, the r code chunk at lines 9-11 and the static text.</p>
+<div id="tip-qmd" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;4.1: Quarto markdown
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>.qmd</code> is the new generation <code>.Rmd</code></p>
+</div>
+</div>
+<p>We can also see the <code>Render</code> button on the upper bar where the <code>knit</code> button would be in an old generation RMarkdown file.</p>
+<p>We can edit this file in virtually identical manner to any other <code>.Rmd</code> file. I say virtually identically because the <code>.qmd</code> file comes with extra benefits making it easier to control the formatting of content on the page. One can easily implement some <code>.html</code> features such as <code>div</code> using the <code>:::{}</code> blocks<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Read more on the basics of <code>.qmd</code> <a href="https://quarto.org/docs/output-formats/html-basics.html">here</a>.</p>
+<div id="fig-qcolmn" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qcolmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/qcolmn.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="img/qcolmn.png" class="img-fluid figure-img" style="width:75.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qcolmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: Two columns using div blocks
+</figcaption>
+</figure>
+</div>
+<p>See for example how a two columned format looks like in <a href="#fig-qcolmn" class="quarto-xref">Figure&nbsp;<span>4.3</span></a>. Include it in your <code>.qmd</code> file and then render it. See how it looks.</p>
+</section>
+<section id="yml" class="level3" data-number="4.0.2">
+<h3 data-number="4.0.2" class="anchored" data-anchor-id="yml"><span class="header-section-number">4.0.2</span> .yml</h3>
+<div id="fig-qyml" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qyml-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/qyml.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="img/qyml.png" class="img-fluid figure-img" style="width:75.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qyml-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.4: Elements of the .yml file
+</figcaption>
+</figure>
+</div>
+<p>Three elements are observable when opening the default <code>.yml</code> file: <code>project</code>, <code>website</code>, and <code>format</code>. See <a href="#fig-qyml" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>.</p>
+<p>First, the element <code>project</code> defines the type of the project you work one. It can be a website as well as a book.</p>
+<p>Second, the element <code>website</code> defines attributes of the website. In <a href="#fig-qyml" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> we can see attributes “title” and “navbar”. <code>title</code> allows us to give a title to the website. <code>navbar</code> is short for navigation bar. Let us look a bit closer at it.</p>
+<p>Inside <code>navbar</code> there is an element <code>left</code> which defines the positioning of the navigation bar. It can also be right, for example. On the <code>navbar</code> we then place the individual pages - which are none other the <code>html</code> renditions of the <code>.qmd</code> files. We see two ways to place these individual pages.</p>
+<p>One is where we give a custom label to the page: see lines 8 and 9. Another where we use the default label that derives from the title of the individual page (remember that each RMarkdown file has a yaml header and so has every .qmd file).</p>
+<div id="tip-navbar" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;4.2: Listing all the individual pages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember to list in the <code>navbar</code> all the individual pages you’d like to be rendered in the final website. Otherwise, the website will not contain them!</p>
+</div>
+</div>
+<p>Third, the element <code>format</code> allows us to format the website overall including, for example, a theme, css (cascading style sheets) or even add a table of contents (toc). <code>theme</code>, <code>css</code> and <code>toc</code> and attributes of the <code>html</code> document. Remember from <a href="autom.html" class="quarto-xref"><span>Chapter 3</span></a> the concept of parameters? Well, that is pretty much the logic here as well - these three are parameters of the html file that we can modify according to our needs. This means that there are multiple themes we can choose from and we can write our very own <code>.css</code> style. We may decide to include a <code>toc</code> or not.</p>
+<div id="tip-qthemes" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;4.3: Further html themes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Select from <a href="https://quarto.org/docs/output-formats/html-themes.html">this</a> list of quarto html themes the one you’d prefer</p>
+</div>
+</div>
+</section>
+<section id="css" class="level3" data-number="4.0.3">
+<h3 data-number="4.0.3" class="anchored" data-anchor-id="css"><span class="header-section-number">4.0.3</span> .css</h3>
+<p>The default <code>.css</code> file is empty. I would say that css is rather advanced so I won’t cover it here. Typically, one can create custom css styles for their website or can download templates from the Internet. Be aware however what you download and from where.</p>
+<p>For the purpose of this seminar the default <code>.css</code> is more than enough.</p>
+</section>
+<section id="site-folder" class="level3" data-number="4.0.4">
+<h3 data-number="4.0.4" class="anchored" data-anchor-id="site-folder"><span class="header-section-number">4.0.4</span> _site folder</h3>
+<p>This folder is created by default. It is the containing folder of the rendered html files and other elements required for the final website.</p>
+<p>For the purpose of this seminar, this folder is important for us because it contains the <code>index.html</code> file. By opening it on our browser, we can inspect locally the rendered website.</p>
+</section>
+<section id="deployment" class="level3" data-number="4.0.5">
+<h3 data-number="4.0.5" class="anchored" data-anchor-id="deployment"><span class="header-section-number">4.0.5</span> Deployment</h3>
+<p>Once you’ve created and locally inspected your website, the next step is to deploy it (publish) it online. Remember from <a href="intro.html" class="quarto-xref"><span>Chapter 1</span></a> that we would need an online repository like <code>GitHub</code> and, most importantly, to have an open and encrypted channel connecting the local machine and the server.</p>
+<p>One other way to publish your site is through <a href="https://quartopub.com/">quartopub.com</a>. Open an account on quartopub.com. We will deploy the website using these two ways: <code>GitHub</code> and <code>quartopub.com</code>. I will describe a bit why you might want to choose one or the other.</p>
+<section id="via-quartopub" class="level4" data-number="4.0.5.1">
+<h4 data-number="4.0.5.1" class="anchored" data-anchor-id="via-quartopub"><span class="header-section-number">4.0.5.1</span> Via quartopub</h4>
+<p>This is a very simple way to deploy your website online. It is integrated seamlessly with <code>quarto</code> so you only need two lines of code in the Terminal. Really.</p>
+<p>First, we need to render the website. To link together all the files that we’ve created/ edited included the <code>.qmd</code>, <code>.yml</code> and <code>.css</code>.</p>
+<p>Copy the line below into the Terminal of your website project and run it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>quarto render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, we can publish it via quartopub provided that we have opened an account.</p>
+<p>Copy the line below into the Terminal of your website project and run it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>quarto publish quarto<span class="sc">-</span>pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You will notice some code running and finally that in the project folder there is a new yml file created <code>_publish.yml</code>. If you open it, you will notice among other the URL to your newly and publicly available website.</p>
+<p>With this approach you deploy the website on a remote server and your files remain available for editing only locally on your machine. You also need to make sure that you render the website after each modification to files making up the website.</p>
+<p>The created example is published through <code>quarto pub</code> <a href="https://adrian-stanciu.quarto.pub/example-website/">here</a>.</p>
+</section>
+<section id="via-github-pages" class="level4" data-number="4.0.5.2">
+<h4 data-number="4.0.5.2" class="anchored" data-anchor-id="via-github-pages"><span class="header-section-number">4.0.5.2</span> Via GitHub Pages</h4>
+<p>In some situations you might want to deploy the website and upload the files comprising the website on a remote repository. This means that your files can be made publicly available for other to clone them or they are available to you in the “cloud”. The website itself is deployed and everybody can access it but in addition everyone can have access to the files that create the website.</p>
+<p>This approach might be preferable when you maintain a website as a group. Or when you create a fancy website together with colleagues from across the globe.</p>
+<p>I wrote a step-by-step guide explanation for older generation RMarkdown. This can be accessed <a href="https://adrianstanciu.eu/sitedummy.html">here</a>.</p>
+<p>Returning to Quarto Website and assuming that a <code>GitHub</code> account has been created, you may follow the steps <a href="https://quarto.org/docs/publishing/github-pages.html">here</a>. A summary of the steps are provided below:</p>
+<p>1 - Create a <code>Quarto Website</code> project on your local machine.</p>
+<p>2 - Make the folder containing the <code>quarto</code> website a <code>git</code> repository<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>git init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>3 - Create an empty repository on your <code>GitHub</code> account. Then, connect the local repository to the newly created online repository.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>remote add origin git<span class="sc">@</span>github.com<span class="sc">:</span>{your github user}<span class="sc">/</span>{your repository where the website will be hosted}.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>4 - We will deploy the website by rendering it to a sub-folder docs. To do this we need to modify the <code>_quarto.yml</code> document. Open the <code>.yml</code> file, copy the following line and paste it as a sub-element to “project”. This new line should be intended and be aligned with the “type: website” element! Save and close the <code>.yml</code> file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>output<span class="sc">-</span>dir<span class="sc">:</span> docs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>5 - Create a <code>.nojekyll</code> file to the repository. Explanation is given <a href="https://quarto.org/docs/publishing/github-pages.html">here</a>. Go to the Terminal of the website project and run the code line:</p>
+<p>Mac/ Linux</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>touch .nojekyll</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Windows</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>copy NUL .nojekyll</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>6 - Render the website. Note that the website will be automatically rendered in the sub-folder <code>docs</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>quarto render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>7 - We push everything to our <code>GitHub</code> repository.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>git add .</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="sc">-</span>m <span class="st">"Push website"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>git push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>8 - Check that the push was successful.</p>
+<div id="fig-repocheck" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-repocheck-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/repocheck.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="img/repocheck.png" class="img-fluid figure-img" style="width:75.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-repocheck-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.5: Contents of the created GitHub repository
+</figcaption>
+</figure>
+</div>
+<p>Go on your <code>GitHub</code> account, open the repository and it should look something like <a href="#fig-repocheck" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>.</p>
+<p>9 - Setup <code>GitHub</code> to “read” the website from the sub-folder <code>docs</code>.</p>
+<div id="fig-deploydocs" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-deploydocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/deploydocs.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="img/deploydocs.png" class="img-fluid figure-img" style="width:75.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deploydocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.6: Setup for deployment from main/docs
+</figcaption>
+</figure>
+</div>
+<p>Navigate to Settings/ Pages and change under “Build and deployment” the branch and folder according to <a href="#fig-deploydocs" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>. Save changes.</p>
+<p>10 - A visit site panel will appear shortly, after the website has been rendered and created, like in <a href="#fig-deploydocs" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>. This may take between a few seconds and a couple of minutes depending on the server availability. Refresh the page and the website is now publicly accessible.</p>
+<p>11 - Now you can repeat steps 6 through 8 every time you edited or modified contents for your website. The website itself will be updated automatically (might take a couple of minutes though).</p>
+<p>The created example is published via <code>GitHub pages</code> <a href="https://adrianstanciu.eu/example/">here</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<div id="tip-customdomain" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;4.4: Custom domains
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can publish your website (or book, as we will see in the next section) on a custom domain. For this you’d need to pay a monthly or yearly fee.</p>
+<p>See for details this <a href="https://adrianstanciu.eu/sitedummy.html#2_The_personalized_one">ultra-brief guide</a> I wrote some time ago but still remains valid.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="online-book" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="online-book">Online book</h2>
+<p>To start with Quarto Books, we should first create such a project. The steps are similar to creating a Quarto Website.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<div id="fig-qbook" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qbook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qbook" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-step1qbook" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-step1qbook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/qbook1.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="fig-qbook"><img src="img/qbook1.png" class="img-fluid figure-img" style="width:75.0%" data-ref-parent="fig-qbook"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-step1qbook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Step 1
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-qbook" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-step2qbook" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-step2qbook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/qbook2.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="fig-qbook"><img src="img/qbook2.png" class="img-fluid figure-img" style="width:75.0%" data-ref-parent="fig-qbook"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-step2qbook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Step 2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qbook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.7: Steps to creating a Quarto Book project
+</figcaption>
+</figure>
+</div>
+<p>When you create the project (see <a href="#fig-qbook" class="quarto-xref">Figure&nbsp;<span>4.7</span></a>), there will be several files created by default: <code>.qmd</code>, <code>.yml</code>, <code>.bib</code> as well as a folder “_book”. The files and folder already contain the fundamental structure of a renderable book.</p>
+<p>To open this default book on your local computer, navigate inside the folder “_book” and open on your Internet browser the <code>index.html</code>.</p>
+<section id="qmd-1" class="level3" data-number="4.0.6">
+<h3 data-number="4.0.6" class="anchored" data-anchor-id="qmd-1"><span class="header-section-number">4.0.6</span> .qmd</h3>
+<p>See sub-section on .qmd for creating websites.</p>
+<p>If you feel comfortable, create some content for the book, for example, add a chapter about yourself.</p>
+</section>
+<section id="yml-1" class="level3" data-number="4.0.7">
+<h3 data-number="4.0.7" class="anchored" data-anchor-id="yml-1"><span class="header-section-number">4.0.7</span> .yml</h3>
+<p>This file type is identical to the one for creating websites. But, there are different attributes addressed! See <a href="#fig-ymlbook" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>.</p>
+<div id="fig-ymlbook" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ymlbook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/ymlbook.png" class="lightbox" data-glightbox="description: .lightbox-desc-11" data-gallery="quarto-lightbox-gallery-11"><img src="img/ymlbook.png" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ymlbook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.8: Attributes of the .yml file for books
+</figcaption>
+</figure>
+</div>
+<p>First to notice, is that now the project we create is <code>type: book</code>. We have learned from the website deployment section that, if we wanted, we could deploy the book via <code>GitHub Pages</code>. That is why I already added the <code>output-dir: docs</code> in <a href="#fig-ymlbook" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>.</p>
+<p>Lines 5 through 13 hold attributes of the book. Remember that for the website, we had specified attributes for website. So, at line 4 in <a href="#fig-qyml" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> we had <code>website:</code> followed by attributes whereas at line 5 in <a href="#fig-ymlbook" class="quarto-xref">Figure&nbsp;<span>4.8</span></a> we have <code>book:</code> followed by several attributes.</p>
+<p>In our example, we have four book attributes including a title, author, publication date and chapters. For a comprehensive list of book attributes see <a href="https://quarto.org/docs/reference/projects/books.html">here</a>.</p>
+<div id="tip-bookchapt" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;4.5: List all the chapters!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember to list under <code>chapters:</code> all the <code>.qmd</code> chapters you’d want to render to the final book. Otherwise these are not included. Note also that the order of chapters is defined here.</p>
+</div>
+</div>
+<p>At line 15, we see the <code>bibliography:</code> entry. We will cover this shortly. But, this element is relevant for books and publishable manuscripts alike. It renders to the final document a <code>.bib</code> file that contains references.</p>
+<p>At lines 17 through 21, we see the <code>format:</code> element, which is similar to website creation. Next to the familiar <code>.html</code> format, we now see also <code>.pdf</code> format. This means that we can render the book both in html and pdf formats! Other formats are likewise possible, for instance, <code>.epub</code> which are for e-readers.</p>
+<div id="tip-pdfbook" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;4.6: PDF of your book
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may inspect the PDF version of your book by navigating inside the “_book” (or “docs”, depending on the output-directory indicated in the <code>.yml</code> file) folder provided, of course, that you first rendered the book using, for example, the code line <code>quarto render</code>.</p>
+</div>
+</div>
+</section>
+<section id="bib" class="level3" data-number="4.0.8">
+<h3 data-number="4.0.8" class="anchored" data-anchor-id="bib"><span class="header-section-number">4.0.8</span> .bib</h3>
+<p>The <code>.bib</code> file format is otherwise said what makes it possible to integrate citations to your book or publishable documents as part of the workflow. <code>.bib</code> files are a type of plain text files (no hyperlinks or enhanced fields that are typical in standard text editors like Microsoft Word).</p>
+<div id="fig-bib" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bib-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/bibfile.png" class="lightbox" data-glightbox="description: .lightbox-desc-12" data-gallery="quarto-lightbox-gallery-12"><img src="img/bibfile.png" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bib-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.9: Example of reference in <code>.bib</code> format
+</figcaption>
+</figure>
+</div>
+<p>Read more on using <code>.bib</code> reference files <a href="https://www.overleaf.com/learn/latex/Bibliography_management_with_bibtex">here</a>.</p>
+<p>Many journals offer the possibility to download a <code>.bib</code> citation of their articles. For example, navigate to this article <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/J.1559-1816.1998.TB01685.X"><span class="citation" data-cites="Conneretal1998">Conner and Armitage (<span>1998</span>)</span></a> published at Journal of Applied Social Psychology (open access). Identify the <code>TOOLS</code> button, press it, and navigate to <code>Export Citation</code> where you can download a BibTex (<code>.bib</code>) citation ready to be incorporated in your reference file.</p>
+<p>One can use online tools for transforming plain text citations into <code>.bib</code> citation format. For example, <a href="https://asouqi.github.io/bibtex-converter/">this converter</a>. Use this if you have a plain text list of references and you’d want them transferred into a <code>.bib</code> file.</p>
+<p>So, in our case, as shown in <a href="#fig-ymlbook" class="quarto-xref">Figure&nbsp;<span>4.8</span></a> at line 15, we specify <code>bibliography: references.bib</code> meaning that the bibliography for the book should be constructed through rendering from the file <code>references.bib</code>.</p>
+</section>
+<section id="deployment-1" class="level3" data-number="4.0.9">
+<h3 data-number="4.0.9" class="anchored" data-anchor-id="deployment-1"><span class="header-section-number">4.0.9</span> Deployment</h3>
+<section id="via-quartopub-1" class="level4" data-number="4.0.9.1">
+<h4 data-number="4.0.9.1" class="anchored" data-anchor-id="via-quartopub-1"><span class="header-section-number">4.0.9.1</span> Via quartopub</h4>
+<p>Book deployment is almost identical with the deployment of websites.</p>
+<p>The easiest option is to deploy through <code>quarto pub</code>. To do this, we only need to do the following:</p>
+<p>1 - Make sure we have opened an account on <a href="https://quartopub.com/">quarto.com</a></p>
+<p>2 - render the book using the line code below (identical to the one used for websites)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>quarto render</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It may take a couple of seconds until the book is rendered. And, if it is the first time you render a qurto book it may take a bit until the necessary dependencies are installed.</p>
+<p>3 - Publish the book using one line of code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>quarto publish quarto<span class="sc">-</span>pub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The example book was published online through <code>quarto.pub</code> <a href="https://adrian-stanciu.quarto.pub/example-book/">here</a>.</p>
+</section>
+<section id="via-github-pages-1" class="level4" data-number="4.0.9.2">
+<h4 data-number="4.0.9.2" class="anchored" data-anchor-id="via-github-pages-1"><span class="header-section-number">4.0.9.2</span> Via GitHub Pages</h4>
+<p>The example book was published online via <code>GitHub pages</code> <a href="https://adrianstanciu.eu/example-book/">here</a>. Similar to the website example, the book is attributed to my personal website.</p>
+</section>
+</section>
+</section>
+<section id="advanced-resources" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="advanced-resources">Advanced resources</h2>
+<p>There are some alternatives out there, for example:</p>
+<ul>
+<li><p>To create a blog using the <code>blogdown</code> package. See a step-by-step <a href="https://www.shilaan.com/post/building-your-website-using-r-blogdown/">guide</a> by <strong>Shilaan Alzahawi</strong>.</p></li>
+<li><p>To create a website using the <code>distill</code> package. See a <a href="https://www.shilaan.com/post/building-your-website-using-r-blogdown/">guide</a> by <strong>Sally A.M. Hogenboom</strong>.</p></li>
+<li><p>A more comprenesive guide to creating a website using <code>r</code> and <code>RStudio</code> is provided in this <a href="https://r4sites-book.netlify.app/">eBook</a> by <strong>Danny Morris</strong>.</p></li>
+<li><p>A different (using older generation RMarkdown) way to self-publish books online using <code>r</code> package <code>bookdown</code>. See <a href="https://bookdown.org/yihui/bookdown/publishing.html">this guide</a> by <strong>Yihui Xie</strong> who basically (co-)created all of this that we are covering throughout the seminar.</p></li>
+</ul>
+<p>Last, but not least. With <code>quarto</code>, one can publish even articles. That is right, one can write using <code>r</code> publishable manuscripts. Start <a href="https://quarto.org/docs/manuscripts/">here</a> and <a href="https://quarto.org/docs/journals/">see here the journals</a> that already support manuscript submission of <code>quarto</code> templates. This is the cherry on top of the cake in view open and transparent science.</p>
+
+
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;4.1&nbsp;(a): Step 1</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;4.1&nbsp;(b): Step 2</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;4.2: Basic structure of a .qmd file</span>
+<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;4.3: Two columns using div blocks</span>
+<span class="glightbox-desc lightbox-desc-6">Figure&nbsp;4.4: Elements of the .yml file</span>
+<span class="glightbox-desc lightbox-desc-7">Figure&nbsp;4.5: Contents of the created GitHub repository</span>
+<span class="glightbox-desc lightbox-desc-8">Figure&nbsp;4.6: Setup for deployment from main/docs</span>
+<span class="glightbox-desc lightbox-desc-9">Figure&nbsp;4.7&nbsp;(a): Step 1</span>
+<span class="glightbox-desc lightbox-desc-10">Figure&nbsp;4.7&nbsp;(b): Step 2</span>
+<span class="glightbox-desc lightbox-desc-11">Figure&nbsp;4.8: Attributes of the .yml file for books</span>
+<span class="glightbox-desc lightbox-desc-12">Figure&nbsp;4.9: Example of reference in <code>.bib</code> format</span>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Conneretal1998" class="csl-entry" role="listitem">
+Conner, M., and Christopher J. Armitage. 1998. <span>“Extending the Theory of Planned Behavior: A Review and Avenues for Further Research.”</span> <em>Journal of Applied Social Psychology</em> 28 (15): 1429–64. <a href="https://doi.org/10.1111/j.1559-1816.1998.tb01685.x">https://doi.org/10.1111/j.1559-1816.1998.tb01685.x</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p><code>.html</code> files are specific types of file that are used online<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Some div blocks require four : instead of three, for example ::::{}. Additional : indicate therefore upper levels of div code embededdness.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>In <a href="intro.html" class="quarto-xref"><span>Chapter 1</span></a> we covered the set up of GitHub and repositories including installing a suite of code. Make sure that is done before attempting to create the folder a <code>git</code> repository.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Note that I am using a custom domain at the root of which is my personal website. In your case it would have a slightly different domain but the website itself will look similar to the example shown.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>As a matter of fact, you might have noticed by now that creating an R project is this simple. You can follow these steps also when creating for example a presentation or a publishable manuscript.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./autom.html" class="pagination-link" aria-label="Automatization">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Automatization</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./apps.html" class="pagination-link" aria-label="Shiny apps">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shiny apps</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ CC BY-NC license
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
+
+
+
+</body></html>

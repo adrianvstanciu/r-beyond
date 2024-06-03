@@ -1,0 +1,38 @@
+{
+  "index.qmd": {
+    "index.html": "0361ad57"
+  },
+  "intro.qmd": {
+    "intro.html": "e19a14fe"
+  },
+  "summary.qmd": {
+    "summary.html": "dc2358e7"
+  },
+  "references.qmd": {
+    "references.html": "f89fb658"
+  },
+  "runiv.qmd": {
+    "runiv.html": "0894b440"
+  },
+  "autom.qmd": {
+    "autom.html": "4bc7d9e2"
+  },
+  "publish.qmd": {
+    "publish.html": "b8dd90bc"
+  },
+  "author.qmd": {
+    "author.html": "ce872a51"
+  },
+  "apps.qmd": {
+    "apps.html": "b4064f79"
+  },
+  "outro.qmd": {
+    "outro.html": "2cb2b013"
+  },
+  "cover.qmd": {
+    "cover.html": "3ef94549"
+  },
+  "license.qmd": {
+    "license.html": "706637e1"
+  }
+}

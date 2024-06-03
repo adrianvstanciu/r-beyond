@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course material for the seminar.">
+
+<title>R beyond data analysis - 5&nbsp; Shiny apps</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./outro.html" rel="next">
+<link href="./publish.html" rel="prev">
+<link href="./img/logo.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta name="citation_title" content="[[5]{.chapter-number}&nbsp; [Shiny apps]{.chapter-title}]{#sec-apps .quarto-section-identifier}">
+<meta name="citation_language" content="en">
+<meta name="citation_reference" content="citation_title=Dynamic documents with R and knitr;,citation_author=Yihui Xie;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=http://yihui.name/knitr/;">
+<meta name="citation_reference" content="citation_title=Within-culture variation in the content of stereotypes: Application and development of the stereotype content model in an eastern european culture;,citation_author=A. Stanciu;,citation_author=C. J. Cohrs;,citation_author=K. Hanke;,citation_author=A. Gavreliuc;,citation_publication_date=2017;,citation_cover_date=2017;,citation_year=2017;,citation_issue=5;,citation_doi=10.1080/00224545.2016.1262812;,citation_volume=157;,citation_journal_title=The Journal of Social Psychology;">
+<meta name="citation_reference" content="citation_title=Extending the theory of planned behavior: A review and avenues for further research;,citation_author=M. Conner;,citation_author=Christopher J. Armitage;,citation_publication_date=1998;,citation_cover_date=1998;,citation_year=1998;,citation_issue=15;,citation_doi=10.1111/j.1559-1816.1998.tb01685.x;,citation_volume=28;,citation_journal_title=Journal of Applied Social Psychology;">
+<meta name="citation_reference" content="citation_title=Predicted as observed? How to identify empirically adequate theoretical constructs;,citation_author=undefined Witte;,citation_author=undefined Stanciu;,citation_author=F. Zenker;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_doi=10.3389/fpsyg.2022.980261;,citation_volume=13;,citation_journal_title=Frontiers in Psychology;">
+<meta name="citation_reference" content="citation_title=Error theory of mental test scores without and with a measurement instrument;,citation_author=undefined Witte;,citation_author=A. Stanciu;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://doi.org/10.31219/osf.io/9ap6m;">
+<meta name="citation_reference" content="citation_title=R: A language and environment for statistical computing;,citation_author=R Core Team;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://www.R-project.org/;">
+<meta name="citation_reference" content="citation_title=Bookdown: Authoring books and technical documents with r markdown;,citation_author=Yihui Xie;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://github.com/rstudio/bookdown;">
+<meta name="citation_reference" content="citation_title=Knitr: A general-purpose package for dynamic report generation in r;,citation_author=Yihui Xie;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://yihui.org/knitr/;">
+<meta name="citation_reference" content="citation_title=Rmarkdown: Dynamic documents for r;,citation_author=JJ Allaire;,citation_author=Yihui Xie;,citation_author=Christophe Dervieux;,citation_author=Jonathan McPherson;,citation_author=Javier Luraschi;,citation_author=Kevin Ushey;,citation_author=Aron Atkins;,citation_author=Hadley Wickham;,citation_author=Joe Cheng;,citation_author=Winston Chang;,citation_author=Richard Iannone;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://github.com/rstudio/rmarkdown;">
+<meta name="citation_reference" content="citation_title=Bookdown: Authoring books and technical documents with R markdown;,citation_author=Yihui Xie;,citation_publication_date=2016;,citation_cover_date=2016;,citation_year=2016;,citation_fulltext_html_url=https://bookdown.org/yihui/bookdown;,citation_isbn=978-1138700109;">
+<meta name="citation_reference" content="citation_title=Dynamic documents with R and knitr;,citation_author=Yihui Xie;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=https://yihui.org/knitr/;">
+<meta name="citation_reference" content="citation_title=Knitr: A comprehensive tool for reproducible research in R;,citation_author=Yihui Xie;,citation_editor=Victoria Stodden;,citation_editor=Friedrich Leisch;,citation_editor=Roger D. Peng;,citation_publication_date=2014;,citation_cover_date=2014;,citation_year=2014;,citation_inbook_title=Implementing reproducible computational research;">
+<meta name="citation_reference" content="citation_title=R markdown: The definitive guide;,citation_author=Yihui Xie;,citation_author=J. J. Allaire;,citation_author=Garrett Grolemund;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=https://bookdown.org/yihui/rmarkdown;,citation_isbn=9781138359338;">
+<meta name="citation_reference" content="citation_title=R markdown cookbook;,citation_author=Yihui Xie;,citation_author=Christophe Dervieux;,citation_author=Emily Riederer;,citation_publication_date=2020;,citation_cover_date=2020;,citation_year=2020;,citation_fulltext_html_url=https://bookdown.org/yihui/rmarkdown-cookbook;,citation_isbn=9780367563837;">
+<meta name="citation_reference" content="citation_title=aRtsy: Generative art with ’ggplot2’;,citation_author=Koen Derks;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://CRAN.R-project.org/package=aRtsy;">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./apps.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shiny apps</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R beyond data analysis</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-save"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./data/sample.sav">
+            Stereotype data .sav
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/movies.xlsx">
+            Actor data .xlsx
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/Examples rmd.zip">
+            Examples .rmd
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/Example book.zip">
+            Example book
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/Example shiny.zip">
+            Example shiny
+            </a>
+          </li>
+      </ul>
+    </div>
+    <a href="./R-beyond-data-analysis.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">General introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./runiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R universe</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./autom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Automatization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./publish.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Self-publish</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apps.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shiny apps</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./outro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Parting words</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-set-up" id="toc-the-set-up" class="nav-link active" data-scroll-target="#the-set-up">The set-up</a></li>
+  <li><a href="#r-script-files-1" id="toc-r-script-files-1" class="nav-link" data-scroll-target="#r-script-files-1">R script files</a></li>
+  <li><a href="#shiny-apps-structure" id="toc-shiny-apps-structure" class="nav-link" data-scroll-target="#shiny-apps-structure">Shiny apps structure</a></li>
+  <li><a href="#code-for-ui" id="toc-code-for-ui" class="nav-link" data-scroll-target="#code-for-ui">Code for UI</a>
+  <ul class="collapse">
+  <li><a href="#layout" id="toc-layout" class="nav-link" data-scroll-target="#layout"><span class="header-section-number">5.0.1</span> Layout</a></li>
+  <li><a href="#input-types" id="toc-input-types" class="nav-link" data-scroll-target="#input-types"><span class="header-section-number">5.0.2</span> Input types</a></li>
+  <li><a href="#conditional-panels" id="toc-conditional-panels" class="nav-link" data-scroll-target="#conditional-panels"><span class="header-section-number">5.0.3</span> Conditional panels</a></li>
+  <li><a href="#tabset" id="toc-tabset" class="nav-link" data-scroll-target="#tabset"><span class="header-section-number">5.0.4</span> Tabset</a></li>
+  </ul></li>
+  <li><a href="#code-for-server" id="toc-code-for-server" class="nav-link" data-scroll-target="#code-for-server">Code for server</a>
+  <ul class="collapse">
+  <li><a href="#reactive-objects" id="toc-reactive-objects" class="nav-link" data-scroll-target="#reactive-objects"><span class="header-section-number">5.0.5</span> Reactive objects</a></li>
+  <li><a href="#input-objects" id="toc-input-objects" class="nav-link" data-scroll-target="#input-objects"><span class="header-section-number">5.0.6</span> Input objects</a></li>
+  <li><a href="#output-objects" id="toc-output-objects" class="nav-link" data-scroll-target="#output-objects"><span class="header-section-number">5.0.7</span> Output objects</a></li>
+  </ul></li>
+  <li><a href="#run-the-app-locally" id="toc-run-the-app-locally" class="nav-link" data-scroll-target="#run-the-app-locally">Run the app locally</a></li>
+  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment">Deployment</a></li>
+  <li><a href="#optional-push-to-github" id="toc-optional-push-to-github" class="nav-link" data-scroll-target="#optional-push-to-github">(Optional) Push to GitHub</a></li>
+  <li><a href="#progress-illustrative-example" id="toc-progress-illustrative-example" class="nav-link" data-scroll-target="#progress-illustrative-example">Progress illustrative example</a></li>
+  <li><a href="#advanced-resources" id="toc-advanced-resources" class="nav-link" data-scroll-target="#advanced-resources">Advanced resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-apps" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shiny apps</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/shinyapps.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="img/shinyapps.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:55.0%"></a></p>
+</figure>
+</div>
+<p>Shiny applications, in short <code>shiny apps</code>, are applications created in <code>r</code> with a <code>shiny</code> user interface. We have seen for the first time the <code>shiny</code> user interface in <a href="autom.html" class="quarto-xref"><span>Chapter 3</span></a> when we created parameterized reports.</p>
+<p><code>shiny apps</code> are extremely useful when the goal is to engage with the audience or readership or supervisors in an interactive and dynamic manner. This application type is powerful because it builds on the programming language <code>r</code> and integrates user design features.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Here are examples of <code>shiny apps</code> from my work and others.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>1 - <a href="https://adrian-stanciu.shinyapps.io/Similarity-Index/">Predicted as observed</a> created by <a href="https://www.juliankohne.com/">Dr.&nbsp;Julian Kohnke</a>. Read explanation paper by <span class="citation" data-cites="Witteetal2022">Witte, Stanciu, and Zenker (<a href="references.html#ref-Witteetal2022" role="doc-biblioref">2022</a>)</span>.</p>
+<p>2 - <a href="https://adrian-stanciu.shinyapps.io/quantapsych/">Quantum social sciences</a> created by myself. Read explanation preprint by <span class="citation" data-cites="WitteStanciu2023">Witte and Stanciu (<a href="references.html#ref-WitteStanciu2023" role="doc-biblioref">2023</a>)</span>.</p>
+<p>3 - <a href="https://maksimrudnev.com/basic-values-app/">Elements of cross-cultural research</a> created by <a href="https://maksimrudnev.com/">Maksim Rudnev</a>.</p>
+<p>Generally, I feel that the beginner’s guide on the official shiny website is more than enough. In this section, we will cover only the basics and address some of the tricky and subtle knowledge about writing code for <code>shiny apps</code>. There are not many, but the few that are can become frustrating.</p>
+<p>To make things a bit more interesting, we will transform the parameterized report build in <a href="autom.html" class="quarto-xref"><span>Chapter 3</span></a> into a shiny app while adding a few additional interactive features to it.</p>
+<div id="tip-shiny" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;5.1: Shiny guide
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The official shiny beginner’s guide is simple, useful, and full of fun and interactive examples. Navigate to this guide <a href="https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/">here</a>.</p>
+</div>
+</div>
+<section id="the-set-up" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="the-set-up">The set-up</h2>
+<div id="fig-shiny" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-shiny-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-shiny" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-step1shiny" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-step1shiny-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/shiny1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="fig-shiny"><img src="img/shiny1.png" class="img-fluid figure-img" style="width:75.0%" data-ref-parent="fig-shiny"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-step1shiny-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Step 1
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-shiny" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-step2shiny" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-step2shiny-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/shiny2.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="fig-shiny"><img src="img/shiny2.png" class="img-fluid figure-img" style="width:75.0%" data-ref-parent="fig-shiny"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-step2shiny-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Step 2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shiny-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Steps to creating a Shiny Application project
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-shiny" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> should by now be a familiar routine: We create an R project that has a default working app. Once you’ve created the project, you will note only one file: <code>app.R</code> (next to the <code>.Rproj</code> extension, of course).</p>
+<p>The <code>.R</code> file format is an <code>r</code> script file format. Meaning, that you can write <code>r</code> code, save it and even run it without having to transfer the code to the console. Remember that in RMarkdown and quarto documents, we worked with <code>r</code> code chunks. Well, the <code>.R</code> script files are much like a gianormous code chunk.</p>
+<p>Remember the dataset <span class="citation" data-cites="Stanciuetal2017">Stanciu et al. (<a href="references.html#ref-Stanciuetal2017" role="doc-biblioref">2017</a>)</span> introduced in <a href="intro.html" class="quarto-xref"><span>Chapter 1</span></a>? We will use it in creating our very own <code>shiny app</code>.</p>
+<div id="tip-rscript" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;5.2: R script files
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that <code>r</code> script files can hold only basic code meaning that features from RMarkdown and quarto are not available. If you’d like to integrate HTML or other languages, that is possible, but requires appropriate integration which we do not cover here.</p>
+</div>
+</div>
+<p>If everything went well, we should have the <code>shiny</code> package already installed from <a href="intro.html" class="quarto-xref"><span>Chapter 1</span></a>. But, if you haven’t done so yet, or are unsure about it, now is a good time to install this package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"shiny"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="r-script-files-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="r-script-files-1">R script files</h2>
+<p><code>.R</code> script files can be very useful not only for <code>shiny apps</code> but also for websites or books. Writing code in such file format can keep the work environment neat and tidy. Also, you might want to use script files when you know in advance that you have repetitive code (e.g., functions) that you use across several of your projects.</p>
+<p>One example where I personally apply this work strategy is when writing my own functions (see <a href="runiv.html" class="quarto-xref"><span>Chapter 2</span></a>). Instead of writing a function each time I would need it, I include all functions I create into an <code>.R</code> script file which I then copy-paste to all my projects. Other strategies are possible, for example, install all packages in a separate script file or divide the work flow in programming into several steps - data import, data cleaning, data manipulation, data analysis, and data ready to report.</p>
+<p>When working with code stored in separate script files we need to call these into the main document, for instance, in an RMarkdown, quarto or shiny app.</p>
+<p>This is easily done with the function <code>source("{your</code>r<code>script here}")</code>. Make sure that the path dependency is correct and that the script is wrapped around <code>" "</code>.</p>
+<div id="tip-scripts" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;5.3: Calling R data files
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When we work with data saved in an <em>R</em> format such as <code>.Rds</code> and <code>.Rdata</code>, we can call this dataframe using the function <code>load("{your .Rdata dataframe here}")</code>. Remember the path dependencies and the <code>" "</code>!</p>
+</div>
+</div>
+<p>Before we start working on the <code>shiny app</code> let us save the data <span class="citation" data-cites="Stanciuetal2017">(<a href="references.html#ref-Stanciuetal2017" role="doc-biblioref">Stanciu et al. 2017</a>)</span> into an <code>.Rdata</code> format. This makes it somewhat easier to import the dataframe in the shiny app code, as it is already in an <code>r</code> format.</p>
+<p>Building on the code written in <a href="autom.html" class="quarto-xref"><span>Chapter 3</span></a>, we save to an <code>.Rdata</code> file format.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># imports data in SPSS .sav format</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dfex<span class="ot">&lt;-</span>haven<span class="sc">::</span><span class="fu">read_sav</span>(<span class="st">"data/sample.sav"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># saves R object dfex into an .Rdata format </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># which we load into the shiny app shortly</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(dfex,<span class="at">file=</span><span class="st">"data/sample.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In <a href="runiv.html" class="quarto-xref"><span>Chapter 2</span></a> we wrote a basic function to add a constant to all numeric columns to a data frame. We can copy this function into an <code>.R</code> script so that we have access to it in writing our first <code>shiny app</code>.</p>
+<p>Create a new <code>.R</code> script file by navigating to File/ New File/ R Script. It will open an empty untitled script file. Copy the function as is into this script file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>func1<span class="ot">&lt;-</span><span class="cf">function</span>(df,n){</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">Filter</span>(is.numeric, df) <span class="co"># we first filter the dataframe for numeric columns</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  tmp <span class="sc">+</span> n <span class="co"># we then add the constant to all the numeric columns</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tip-rscrptfnct" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;5.4: Packes for <code>r</code> scripts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that if you write custom scripts and store them inside <code>r</code> script files, you’d need to make sure that the required packages are called inside that script file. Use the <code>install.packages()</code> or <code>library()</code> commands as described in <a href="runiv.html" class="quarto-xref"><span>Chapter 2</span></a>.</p>
+</div>
+</div>
+</section>
+<section id="shiny-apps-structure" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="shiny-apps-structure">Shiny apps structure</h2>
+<p>What makes <code>shiny apps</code> powerful and at the same time a bit tricky to program is the structure. Shiny apps have a user interface (UI) that is wrapped around code that runs in the background on a server. When programming a <code>shiny app</code> therefore we need to program both the design (UI) and the code that runs on the server (server).</p>
+<p>The UI part makes a <code>shiny app</code> attractive to the audience and, if programmed right, can engage the audience in an interactive and dynamic manner. Programming the UI part requires a bit of orientation toward the audience for which the app is designed. What are the minimum skills required to operate the app? What theoretical and practical expertise is expected for the audience to intuitively navigate the app? Read more on user interface in general on the <a href="https://en.wikipedia.org/wiki/User_interface">Wikipedia page</a>.</p>
+<p>The server part makes a <code>shiny app</code>, well, work. Here is where code is written to import, clean, manipulate and analyse data, metadata and all sorts of other things. One way that I find helpful to think of the server part is to see it as the old-school <em>R</em> coding on my local machine. When you use <code>r</code> for data analysis, for example, you use this programming language in the console which then you run resulting in some form of output. Well, this means technically that you interact with your computational machine (CPU, for example) through the <code>r</code> programming language. This very principle applies also for writing code for the server for <code>shiny apps</code>.</p>
+<p>This distinction is less intuitive when we run the <code>shiny app</code> on the local machine. But, this distinction between UI and server becomes crucial when we deploy the app on online repositories, as we will see shortly. By deploying the app code structured into UI and server, we tell the respective servers how to read our code.</p>
+<p>So, long story short, both the UI and server segments of a <code>shiny app</code> code has its own pre-defined role and it is crucial for the well functioning of the app that this structure is maintained. Otherwise the app breaks.</p>
+</section>
+<section id="code-for-ui" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="code-for-ui">Code for UI</h2>
+<p>This will not be a comprehensive code at all. But, it should offer sufficient hands-on tips on how to start building your UI for your first <code>shiny app</code>.</p>
+<p>One thing to keep on the back of your mind is that in the UI part we need to refer to objects from the server part. If we do not call objects from the server in the UI part properly, the app might still work but the audience will not have access to it.</p>
+<div id="tip-uicomma" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;5.5: Commas and brackets!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure that you always use commas and close the brackets appropriately. Otherwise, the design might not look as intended or the entire code might break even.</p>
+</div>
+</div>
+<p>My recommendation is to take some time to decide what do you want to include in the app and what do you need for your audience. For example, do you want the audience to view plots or tables, and if yes, do you want these to be interactive? If that is the case, what code do you need to write on the server part and what is the final <code>r</code> object that you’d want to be displayed for the audience via the UI?</p>
+<p>So, for me at least, writing a <code>shiny app</code> is a bit of a forth and back between the UI and server code.</p>
+<section id="layout" class="level3" data-number="5.0.1">
+<h3 data-number="5.0.1" class="anchored" data-anchor-id="layout"><span class="header-section-number">5.0.1</span> Layout</h3>
+<div id="fig-panels" class="quarto-figure quarto-figure-center quarto-float anchored" data-layout-col="2">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-panels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="fig-shinypanels" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-shinypanels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/shinypanels.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="fig-panels"><img src="img/shinypanels.png" class="img-fluid figure-img" style="width:55.0%" data-ref-parent="fig-panels"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-shinypanels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Basic panels of a <code>shiny app</code>.
+</figcaption>
+</figure>
+</div>
+<div id="fig-uicode" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-uicode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/shinypanelui.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="fig-panels"><img src="img/shinypanelui.png" class="img-fluid figure-img" style="width:55.0%" data-ref-parent="fig-panels"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-uicode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Corresponding code in the UI.
+</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: UI code and corresponding shiny outcome
+</figcaption>
+</figure>
+</div>
+<p><code>sidebarLayout()</code>: Inside this function we define the content that will be displayed on the side of the app window. See red panel of <a href="#fig-shinypanels" class="quarto-xref">Figure&nbsp;<span>5.2 (a)</span></a> and the corresponding red panel in <a href="#fig-uicode" class="quarto-xref">Figure&nbsp;<span>5.2 (b)</span></a>. One can also add elements to the layout of this panel. For example try out the code below and see what happens.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy and paste this code line as the first argument inside the</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sidebarLayout() function followed by a comma</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># I cannot stress this enough: Commas are super super important</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># so do not forget them</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>position <span class="ot">=</span> <span class="st">"right"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>sidebarPanel()</code>: This is wrapped inside the <code>sidebarLayout()</code> because it is just one element of several that can be placed on the <code>sidebarLayout</code> of the app.</p>
+<p>The attributes defined here are fed into the code on the server, so make sure you chose the appropriate user input type.</p>
+<p><code>mainPanel()</code>: This contains the output, be it plain text, live text, tables or figures. If in the <code>sidebarPanel()</code> you define the user input attributes, in the <code>mainPanel()</code> you simply call the objects computed on the server and programm how exactly will they be displayed. See in blue <a href="#fig-shinypanels" class="quarto-xref">Figure&nbsp;<span>5.2 (a)</span></a> and the corresponding code in blue inside the UI <a href="#fig-uicode" class="quarto-xref">Figure&nbsp;<span>5.2 (b)</span></a>.</p>
+</section>
+<section id="input-types" class="level3" data-number="5.0.2">
+<h3 data-number="5.0.2" class="anchored" data-anchor-id="input-types"><span class="header-section-number">5.0.2</span> Input types</h3>
+<p>Inside the <code>sidebarPanel()</code> we can define the kind of user input we expect our audience to play with. That is – remember parameterized reports from <a href="autom.html" class="quarto-xref"><span>Chapter 3</span></a> – what are the parameters that users can interact with. There are a couple of input types, for example, slider input on a continuous pre-defined numeric range, select from a pre-defined list, check if TRUE or FALSE, and a numeric only text field.</p>
+<p><code>sliderInput()</code>: This is given as an example in the default <code>shiny app</code> that comes pre-set when creating a shiny app project. It is a slider input type. Observable are five attributes:</p>
+<ul>
+<li><p>Label of the input <code>"bins"</code> which is a reference label for the code</p></li>
+<li><p>Label of the input displayed to users (<code>"Number of bins:"</code>). Note that this is different than input label above and serves only the function of informing the user. The input label above serves the function of cross-reference in code writing.</p></li>
+<li><p><code>min</code> and <code>max</code> define the minimum and maximum of the numeric range of the slider.</p></li>
+<li><p><code>value</code> defines the default value of the slider which is displayed every time the app is called.</p></li>
+</ul>
+<p><code>selectInput()</code>: This is a select from a pre-defined list input type. In the basic form, it requires three attributes:</p>
+<ul>
+<li><p>Label of input for cross-referencing in the code.</p></li>
+<li><p>Label of input for display for the app users.</p></li>
+<li><p>Values of the pre-defined list. Note that these should be places inside a list, which has this basic structure:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">"{NAME 1 TO BE DISPLAYED}"</span> <span class="ot">=</span> <span class="st">"{value 1 for code cross-referencing}"</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">"{NAME 2 TO BE DISPLAYED}"</span> <span class="ot">=</span> <span class="st">"{value 2 for code cross-referencing}"</span>...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It may look like this (code from <span class="citation" data-cites="WitteStanciu2023">Witte and Stanciu (<a href="references.html#ref-WitteStanciu2023" role="doc-biblioref">2023</a>)</span>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>(<span class="st">"hov"</span>, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Choice: "</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(<span class="st">"all"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Openness to change"</span> <span class="ot">=</span> <span class="st">"och"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Conservation"</span> <span class="ot">=</span> <span class="st">"con"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Self Transcendence"</span> <span class="ot">=</span> <span class="st">"str"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Self Enhancement"</span> <span class="ot">=</span> <span class="st">"sen"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                     )<span class="co">#closes selectInput</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>checkboxInput()</code>: This is a yes/ no logical input type. Ideally, you always define at least three atributes:</p>
+<ul>
+<li><p>Label of input for cross-referencing in the code.</p></li>
+<li><p>Label of input for display for the app users.</p></li>
+<li><p><code>value</code> is true (<code>value = T</code>) or false (<code>value = F</code>).</p></li>
+</ul>
+<p>It may look like this (code from <span class="citation" data-cites="WitteStanciu2023">Witte and Stanciu (<a href="references.html#ref-WitteStanciu2023" role="doc-biblioref">2023</a>)</span>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkboxInput</span>(<span class="st">"p1.ess"</span>,<span class="st">"Distribution"</span>, <span class="at">value =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>numericInput()</code>: This an input type that allows the user to type in numeric values within a pre-defined range with a pre-defined increment value. One can define the following:</p>
+<ul>
+<li><p>Label of input for cross-referencing in the code.</p></li>
+<li><p>Label of input for display for the app users.</p></li>
+<li><p><code>value</code> is the default value show every time the app is opened.</p></li>
+<li><p><code>min</code> and <code>max</code> define the range of possible values within which the user can choose to enter from. Note that this range is not visible to the user but it is a by-design-limitation. An error is shown or simply the input is not validated if the user enters a value outside this pre-defined range.</p></li>
+<li><p><code>step</code> defines the increment value. It can be a full integral number or anything inbetween.</p></li>
+</ul>
+<p>It may look like this (code from <span class="citation" data-cites="WitteStanciu2023">Witte and Stanciu (<a href="references.html#ref-WitteStanciu2023" role="doc-biblioref">2023</a>)</span>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">numericInput</span>(<span class="st">"n"</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">label =</span> <span class="st">"Sample size"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">value =</span> <span class="dv">20</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">min =</span> <span class="dv">20</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">max =</span> <span class="dv">1000</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">step =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conditional-panels" class="level3" data-number="5.0.3">
+<h3 data-number="5.0.3" class="anchored" data-anchor-id="conditional-panels"><span class="header-section-number">5.0.3</span> Conditional panels</h3>
+<p>There might be situations where you’d want to create a conditional user interface. This means that the UI experience can, at some pre-defined parts, be conditional on user input. For instance, for the app <a href="https://adrian-stanciu.shinyapps.io/quantapsych/">Quantum Social Science</a>, I created a UI dependent on type of analysis: choice. There are three choices the user can select: Simulations, Survey data or Experimental data (which is still under construction). Depending on the user choice at this stage, the user has different options to choose from - either interact with simulated data or with secondary data.</p>
+<p>It may look like (code from <span class="citation" data-cites="WitteStanciu2023">Witte and Stanciu (<a href="references.html#ref-WitteStanciu2023" role="doc-biblioref">2023</a>)</span>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conditionalPanel</span>( </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">condition=</span> <span class="st">"input.type=='Simulations'"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>... <span class="co"># the code continues here with input values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>conditionalPanel()</code>: Wrapped inside one can code the UI conditional on an input defined at a previous stage. Let us pay a closer look at the example above:</p>
+<p><code>condition = "input.type=='Simulations'"</code>:</p>
+<ul>
+<li><p><code>condition =</code> introduces the condition that needs to hold for the contents of the rest of conditionalPanel to be activated.</p></li>
+<li><p><code>"input.type=='Simulations'"</code> is the condition itself which is to be read as follows: if the input of input object “type” is identical to “Simulations”, then the subsequent contents are activated. See <a href="#fig-condinput" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>.</p></li>
+</ul>
+<div id="fig-condinput" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-condinput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/condinput.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="img/condinput.png" class="img-fluid figure-img" style="width:75.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-condinput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Exerpt from UI code of <span class="citation" data-cites="WitteStanciu2023">Witte and Stanciu (<a href="references.html#ref-WitteStanciu2023" role="doc-biblioref">2023</a>)</span>
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="tabset" class="level3" data-number="5.0.4">
+<h3 data-number="5.0.4" class="anchored" data-anchor-id="tabset"><span class="header-section-number">5.0.4</span> Tabset</h3>
+<p>There can be situations where it is helpful to organize output into separate panels – similar logic to having several tabs open on your web browser.</p>
+<p>The app <a href="https://adrian-stanciu.shinyapps.io/Similarity-Index/">Predicted as observed</a> created by <a href="https://www.juliankohne.com/">Julian Kohne</a> for the paper <span class="citation" data-cites="Witteetal2022">Witte, Stanciu, and Zenker (<a href="references.html#ref-Witteetal2022" role="doc-biblioref">2022</a>)</span> nicely uses this feature.</p>
+<p>In the <code>mainPanel()</code> the “Abstract” of the paper, followed by “Check assumptions”, the calculation of the “Similarity Index” and display of the “Similarity Interval”, and, finally, “Recommendations” are organized neatly into tabs. The user can navigate these tabs knowing the kind of content to expect.</p>
+<p><code>tabsetPanel()</code>: defines the overall structure within which multiple panels can be placed.</p>
+<p><code>tabPanel()</code>: defines the content be placed inside a tab. This is coded inside <code>tabsetPabel()</code>!</p>
+<p>It may look something like this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tabsetPabel</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabPanel1</span>(<span class="st">"label 1 for display to user"</span>, {content <span class="dv">1</span> here}),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabPanel2</span>(<span class="st">"label 2 for display to user"</span>, {content <span class="dv">2</span> here})</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="code-for-server" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="code-for-server">Code for server</h2>
+<p>The code for the server is a custom function, a gianormous custom function! Like any custom functions (see <a href="runiv.html" class="quarto-xref"><span>Chapter 2</span></a>), there is a structure to it, namely <code>function(){}</code>.</p>
+<p>The server function takes two arguments, namely <code>input</code> and <code>output</code>.</p>
+<p><code>input</code> signals what comes from the UI interface. That is, what the user of the app is inputing via the UI.</p>
+<p><code>output</code> signals what goes from the server to the UI. That is, what the user views as a result of interacting with the app.</p>
+<section id="reactive-objects" class="level3" data-number="5.0.5">
+<h3 data-number="5.0.5" class="anchored" data-anchor-id="reactive-objects"><span class="header-section-number">5.0.5</span> Reactive objects</h3>
+<p>The simplest way to think of reactive objects is to see them as plain old-school <em>R</em> code wrapped inside an object that the server needs to compute. It is reactive, because the server has to first compute the reactive object before performing any tasks that call on such an object.</p>
+<p>In <code>r</code> code written for computation on the local machine it would be called simply an <code>r</code> object.</p>
+<p>On the server, however, code is computed only when needed which makes objects created on the server reactive to code that requires them. They react if you poke them. Otherwise, they sleep.</p>
+<div id="tip-reactiveobj" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;5.6: Mind the brackets
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is one of those ultra small details that took me days to figure out. When you create a reactive object, remember to always call it as such. It is an <code>r</code> object all right, but it looks like a function: <code>reactiveobject()</code>.</p>
+</div>
+</div>
+<p>A reactive object, like all objects coded for the server, need to be wrapped in a specific function, otherwise the server will not recognize it as such.</p>
+<div id="tip-servercode" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;5.7: Server code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Code for the server – whether it is reactive, input or output objects – needs to be written inside <code>({YOUR SERVER CODE HERE})</code>. It is a specific code chunk for the server. Its logic is similar to the code chunk introduced in <a href="autom.html" class="quarto-xref"><span>Chapter 3</span></a> – it is a field recognized by the server as code to be computed.</p>
+</div>
+</div>
+<p>Once a reactive object was coded following the code structure introduce in <a href="#tip-servercode" class="quarto-xref">Tip&nbsp;<span>5.7</span></a>, the reactive object itself can be called inside other code on the server following the structure presented in <a href="#tip-reactiveobj" class="quarto-xref">Tip&nbsp;<span>5.6</span></a>.</p>
+</section>
+<section id="input-objects" class="level3" data-number="5.0.6">
+<h3 data-number="5.0.6" class="anchored" data-anchor-id="input-objects"><span class="header-section-number">5.0.6</span> Input objects</h3>
+<p>Technically speaking, input objects are reactive objects. But, I discuss them separately because these feed user input to the code.</p>
+<p>This can be recognized and done by adding the prefix <code>input$</code> when calling user input.</p>
+<div id="fig-servercode1" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-servercode1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-servercode1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-inputcode" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-inputcode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/inputcode.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="fig-servercode1"><img src="img/inputcode.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-servercode1"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-inputcode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Example code reactive and input object.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-servercode1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-uiinput" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-uiinput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/ui-input.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="fig-servercode1"><img src="img/ui-input.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-servercode1"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-uiinput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Corresponding UI code for input objects.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-servercode1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Code example for reactive objects with user input
+</figcaption>
+</figure>
+</div>
+<p>In the code example from <span class="citation" data-cites="Witteetal2022">Witte, Stanciu, and Zenker (<a href="references.html#ref-Witteetal2022" role="doc-biblioref">2022</a>)</span> (see <a href="#fig-inputcode" class="quarto-xref">Figure&nbsp;<span>5.4 (a)</span></a>), a reactive object <code>tmp.df</code> is coded at lines 385 – 395.</p>
+<p>This reactive object happens to be using user input information as indicated at lines 387 – 390.</p>
+<p>To illustrate the correspondence between UI and the server, see in <a href="#fig-uiinput" class="quarto-xref">Figure&nbsp;<span>5.4 (b)</span></a> the user defined object <code>n</code> at lines 95 – 100 and the user defined object <code>m0</code> at lines 102 – 107.</p>
+</section>
+<section id="output-objects" class="level3" data-number="5.0.7">
+<h3 data-number="5.0.7" class="anchored" data-anchor-id="output-objects"><span class="header-section-number">5.0.7</span> Output objects</h3>
+<p>Output objects are the output that we want to be displayed on the user interface. This means that we have to call it as such and indicate the position where we want it displayed.</p>
+<p>Ideally, we have already coded the display position and display characteristics in the UI code.</p>
+<p>On the server, we need to indicate the object corresponding to the UI code accordingly. When we feed user input to the server code we write the prefix <code>input${USER INPUT}</code>. Well, when we want an object displyed on the user interface we write the prefix <code>output${corresponding label in the UI code}</code>.</p>
+<p>Note the dollar sign <code>$</code>!</p>
+<div id="fig-plotshiny" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plotshiny-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-plotshiny" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-outputapp" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-outputapp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/outputshiny.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="fig-plotshiny"><img src="img/outputshiny.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-plotshiny"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-outputapp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) UI code and corresponding server code for output object.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-plotshiny" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-plotdisplay" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-plotdisplay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/shinypanels2.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="fig-plotshiny"><img src="img/shinypanels2.png" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-plotshiny"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-plotdisplay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Corresponding plot display in the user interface.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plotshiny-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: Shiny app full circle: ui, server and user experience
+</figcaption>
+</figure>
+</div>
+<p>In <a href="#fig-outputapp" class="quarto-xref">Figure&nbsp;<span>5.5 (a)</span></a>, we see at lines 36 – 38 (red field) the UI code for object <code>distPlot</code> to be displayed. At lines, 45 – 54 (blue field), we see the server code for this object. Finally, in <a href="#fig-plotdisplay" class="quarto-xref">Figure&nbsp;<span>5.5 (b)</span></a> (blue field), we see the output plot displayed for user experience.</p>
+<div id="tip-output" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;5.8: Output objects need adequate functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When writing output objects, these need to be wrapped inside designated code chunks – for plots or tables or text. See this official <a href="https://rstudio.github.io/cheatsheets/html/shiny.html">cheat sheet</a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="run-the-app-locally" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="run-the-app-locally">Run the app locally</h2>
+<p>Running the app locally is as simple as pressing the button <code>Run App</code> on the bar – see for instance <a href="#fig-uicode" class="quarto-xref">Figure&nbsp;<span>5.2 (b)</span></a>.</p>
+<p>Note however that this is in fact calling a function written inside the <code>app.R</code> script.</p>
+<p>This function is <code>shinyApp(ui = ui,server = server)</code>. The <code>shinyApp()</code> function takes two arguments <code>ui</code> and <code>server</code> which we define separately, as indicated above.</p>
+<p>A new window will open. You might note two things in the console:</p>
+<ol type="1">
+<li><p>The console is busy with the app, as indicated by the <span style="color:red">STOP</span> symbol.</p></li>
+<li><p>The text in the console <span style="color:red">Listening on {an IP address}</span>.</p></li>
+</ol>
+<p>These two things indicate that the app is running and that the console cannot be used for other purposes. It also means that the app is automatically updated if you are to modify the code, UI or server. It also means that your local machine acts as the server in this case.</p>
+<p>The moment you close the app, the console becomes available once more.</p>
+</section>
+<section id="deployment" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="deployment">Deployment</h2>
+<p>To deploy the app, we would need a dedicated server and, of course, an access account on that server. One efficient and smooth way to deploy a <code>shiny app</code> online is to use the dedicated server <a href="https://www.shinyapps.io/">shinyapps.io</a>. It is a free service maintained by the same community behind <code>RStudio</code> – <a href="https://posit.co/">posit.co</a>.</p>
+<p>To start with, open an account on shinyapps.io. Once you have an account, we can turn back to our app that we’ve coded in <code>RStudio</code>.</p>
+<div id="fig-deployapp" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-deployapp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/deployapp.png" class="lightbox" data-glightbox="description: .lightbox-desc-11" data-gallery="quarto-lightbox-gallery-11"><img src="img/deployapp.png" class="img-fluid figure-img" style="width:75.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deployapp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: Steps to <code>shiny app</code> deployment on external server.
+</figcaption>
+</figure>
+</div>
+<p>Next to the button <code>Run App</code> there is another button called <code>Publish the application or document</code>. Click on it and follow the steps as indicated. Note that in <a href="#fig-deployapp" class="quarto-xref">Figure&nbsp;<span>5.6</span></a>, the app has already been deployed so there is a connection with the external server made. If you publish an app for the first time, you will only see the option <code>Publish Website...</code>. Select from the options <code>shinyapps.io</code> and follow the instructions. In a matter of a few secods your app will be online!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div id="tip-filedeploymnt" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;5.9: Select your files to deploy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Not all files are needed for the final app to function. When you deploy the app, select those files from your local repository that the app actually needs to function. By doing this, you make sure that the server is not filled with junk. After all, your free <code>shinyapps.io</code> account has limited space.</p>
+</div>
+</div>
+<p>The illustrative example is deployed <a href="https://adrian-stanciu.shinyapps.io/Example-shiny/">online here</a>. See also sub-section below.</p>
+</section>
+<section id="optional-push-to-github" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="optional-push-to-github">(Optional) Push to GitHub</h2>
+<p>One further thing we might want to do is to push the script files to <code>GitHub</code> as discussed in <a href="publish.html" class="quarto-xref"><span>Chapter 4</span></a>.</p>
+<p>Try doing that yourself. I pushed my script files on a public <code>GitHub</code> repository that can be <a href="https://github.com/adrianvstanciu/Example-shiny">accessed here</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+</section>
+<section id="progress-illustrative-example" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="progress-illustrative-example">Progress illustrative example</h2>
+<p>Below is the entire code for the illustrative example that was transformed from a parameterized report into a shiny app.</p>
+<p>You can try to replicate it by yourself and compare it with mine. Or copy paste it directly into a <code>app.R</code> script and run it. The choice is yours.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">### calls r script files</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"functions.R"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">### loads data</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/sample.Rdata"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">### imports libraries</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">getOption</span>(<span class="st">"repos"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>r[<span class="st">"CRAN"</span>] <span class="ot">&lt;-</span><span class="st">"https://cloud.r-project.org/"</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repos=</span>r)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("pacman")</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># pacman::p_load(tidyverse,readxl,haven,sjlabelled,kable,kableExtra)</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="do">#### shiny app starts here </span><span class="al">###</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Define UI for application that draws a histogram</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Application title</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">titlePanel</span>(<span class="st">"Illustrative example"</span>),</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sidebar with a slider input for number of bins </span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarLayout</span>(<span class="at">position =</span> <span class="st">"left"</span>,</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sidebarPanel</span>(</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>          <span class="co"># actor input</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>          <span class="fu">selectInput</span>(<span class="st">"actor"</span>,</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">label=</span><span class="st">"Choose an actor:"</span>,</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">c</span>(<span class="st">"Keanu Reeves"</span>,</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Alec Baldwin"</span>,</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Arnold Schwarzenegger"</span>,</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Timothee Chalamet"</span>,</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Anamaria Marinca"</span>),</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>                      <span class="at">multiple =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>          <span class="co"># stereotype input  </span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>          <span class="fu">selectInput</span>(<span class="st">"stereotype"</span>,</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>                        <span class="at">label=</span><span class="st">"Stereotype dimension:"</span>,</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">c</span>(<span class="st">"Warmth women"</span> <span class="ot">=</span> <span class="st">"wom_warm"</span>,</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Competence women"</span> <span class="ot">=</span> <span class="st">"wom_comp"</span>,</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Warmth men"</span> <span class="ot">=</span> <span class="st">"men_warm"</span>,</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Competence men"</span> <span class="ot">=</span> <span class="st">"men_comp"</span>))</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Show a plot of the generated distribution</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mainPanel</span>(</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>          <span class="fu">h3</span>(<span class="st">"Output displayed here"</span>,),</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>          <span class="co"># start tabset Panel</span></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tabsetPanel</span>(</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>            <span class="co"># tab 1</span></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tabPanel</span>(<span class="st">"Actors"</span>,</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>                     </span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>                     tags<span class="sc">$</span><span class="fu">p</span>(<span class="fu">HTML</span>(<span class="fu">paste</span>(<span class="st">"A table is generated based on the actors chosen on the side panel.."</span>, <span class="at">sep =</span> <span class="st">""</span>)) ),        </span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>                     </span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>                     DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">"act"</span>) ),</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>            <span class="co"># tab 2</span></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tabPanel</span>(<span class="st">"Stereotypes"</span>,</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>                     </span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>                     tags<span class="sc">$</span><span class="fu">p</span>(<span class="fu">HTML</span>(<span class="fu">paste</span>(<span class="st">"A plote is generated based on the variable chosen on the side panel.."</span>, <span class="at">sep =</span> <span class="st">""</span>)) ),</span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>                     </span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">plotOutput</span>(<span class="st">"st"</span>) )</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>          ) <span class="co"># close tabset Panel</span></span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Define server logic required to draw a histogram</span></span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>  <span class="do">####### -- imports and prepares data from here </span></span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reactive object</span></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>  <span class="co"># data from Stanciu et al. 2017</span></span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>  tempdf <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>    choice<span class="ot">=</span>input<span class="sc">$</span>stereotype</span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>    dfex <span class="sc">%&gt;%</span> </span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>      sjlabelled<span class="sc">::</span><span class="fu">remove_all_labels</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pivot_longer</span>(<span class="fu">contains</span>(<span class="st">"warm"</span>) <span class="sc">|</span> <span class="fu">contains</span>(<span class="st">"comp"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(name <span class="sc">%in%</span> choice)</span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reactive object</span></span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>  <span class="co"># meta data movies</span></span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>  movietmp<span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>    dfmv<span class="ot">&lt;-</span>readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"mat/movies.xlsx"</span>,<span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(Actor <span class="sc">%in%</span> input<span class="sc">$</span>actor)</span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>    <span class="do">#### -- generates output objects from here</span></span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>  <span class="co"># generate ggplot</span></span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>  plottmp<span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>    <span class="do">## ggplot code</span></span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>    (input<span class="sc">$</span>plot_type <span class="sc">==</span> <span class="st">"ggplot2"</span>)</span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">tempdf</span>(), <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(gen),<span class="at">y=</span>value)) <span class="sc">+</span></span>
+<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste0</span>(<span class="st">"Evaluation based on "</span>, input<span class="sc">$</span>stereotype), </span>
+<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>           <span class="at">x=</span><span class="st">"Gender"</span>,</span>
+<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span><span class="fu">paste0</span>(<span class="st">"Stereotype of "</span>, input<span class="sc">$</span>stereotype)) <span class="sc">+</span></span>
+<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_light</span>()</span>
+<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>  <span class="do">##### -- code for output from here</span></span>
+<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>  <span class="co"># render plot for user </span></span>
+<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>st <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plottmp</span>()</span>
+<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>act <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
+<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>    <span class="fu">movietmp</span>()</span>
+<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application </span></span>
+<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note however that you’d still need to create all the external scripts and <code>r</code> data files.</p>
+</section>
+<section id="advanced-resources" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="advanced-resources">Advanced resources</h2>
+<p>If you really really like <code>shiny apps</code> and want to master them, then <a href="https://mastering-shiny.org/index.html">this book</a> by Hadley Wickham contains everything one needs to know. Other online resources are available and offer varying levels of complexity.</p>
+
+
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;5.1&nbsp;(a): Step 1</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;5.1&nbsp;(b): Step 2</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;5.2&nbsp;(a): Basic panels of a <code>shiny app</code>.</span>
+<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;5.2&nbsp;(b): Corresponding code in the UI.</span>
+<span class="glightbox-desc lightbox-desc-6">Figure&nbsp;5.3: Exerpt from UI code of <span class="citation" data-cites="WitteStanciu2023">Witte and Stanciu (<a href="references.html#ref-WitteStanciu2023" role="doc-biblioref">2023</a>)</span></span>
+<span class="glightbox-desc lightbox-desc-7">Figure&nbsp;5.4&nbsp;(a): Example code reactive and input object.</span>
+<span class="glightbox-desc lightbox-desc-8">Figure&nbsp;5.4&nbsp;(b): Corresponding UI code for input objects.</span>
+<span class="glightbox-desc lightbox-desc-9">Figure&nbsp;5.5&nbsp;(a): UI code and corresponding server code for output object.</span>
+<span class="glightbox-desc lightbox-desc-10">Figure&nbsp;5.5&nbsp;(b): Corresponding plot display in the user interface.</span>
+<span class="glightbox-desc lightbox-desc-11">Figure&nbsp;5.6: Steps to <code>shiny app</code> deployment on external server.</span>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Stanciuetal2017" class="csl-entry" role="listitem">
+Stanciu, A., C. J. Cohrs, K. Hanke, and A. Gavreliuc. 2017. <span>“Within-Culture Variation in the Content of Stereotypes: Application and Development of the Stereotype Content Model in an Eastern European Culture.”</span> <em>The Journal of Social Psychology</em> 157 (5): 611–28. <a href="https://doi.org/10.1080/00224545.2016.1262812">https://doi.org/10.1080/00224545.2016.1262812</a>.
+</div>
+<div id="ref-WitteStanciu2023" class="csl-entry" role="listitem">
+Witte, E. H., and A. Stanciu. 2023. <span>“Error Theory of Mental Test Scores Without and with a Measurement Instrument.”</span> <a href="https://doi.org/10.31219/osf.io/9ap6m">https://doi.org/10.31219/osf.io/9ap6m</a>.
+</div>
+<div id="ref-Witteetal2022" class="csl-entry" role="listitem">
+Witte, E. H., Stanciu A., and F. Zenker. 2022. <span>“Predicted as Observed? How to Identify Empirically Adequate Theoretical Constructs.”</span> <em>Frontiers in Psychology</em> 13: 980261. <a href="https://doi.org/10.3389/fpsyg.2022.980261">https://doi.org/10.3389/fpsyg.2022.980261</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p><code>python</code> programming language is likewise supported but won’t be covered in this short book. See the <a href="https://shiny.posit.co/py/">official website</a> for more.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>One can integrate <code>shiny app</code> features in <code>quarto</code> documents as described <a href="https://quarto.org/docs/interactive/shiny/">here</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Some of these apps might take a bit of time until they load because they might be “asleep”. A shiny app is asleep when there is no activity for a pre-determined time thus the server cleans up working memory by putting inactive apps to sleep.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Connecting to the server and deploying the app might take some time. Once the app has been successfully deployed, it will open automatically in your default web browser.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Note that you need to be logged-in to your <code>GitHub</code> account to see the script files<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./publish.html" class="pagination-link" aria-label="Self-publish">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Self-publish</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./outro.html" class="pagination-link" aria-label="Parting words">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Parting words</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ CC BY-NC license
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","selector":".lightbox","loop":false,"closeEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
+
+
+
+</body></html>

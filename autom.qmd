@@ -1,0 +1,434 @@
+# Automatization {#sec-autom}
+
+```{r,echo=FALSE,include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE)
+
+library(tidyverse)
+```
+
+![](img/automate.jpg){.lightbox width=50% fig-align="center"}
+
+Automatization of the work flow, as I mean it throughout the seminar, is a holistic or integrated approach to the work flow whereby repetitive tasks can be reduced through the use of code and a designated work environment. 
+
+This approach can be useful to reduce working time, ensuring reproducible outcome as well as enhancing work transparency.
+
+Among the domains where this is an asset are:
+
+a) Research: Data analysis and results interpretation, writing manuscripts, and adhering to open science.
+b) Applied sector: Writing of repetitive reports.
+c) Education: Transparent homework.
+
+This chapter covers the basics of creating and working in an integrated work environment. 
+
+## Elements and structure {-}
+
+The first thing we need is to install the package `rmarkdown` (and all dependencies, meaning all the packages that `rmarkdown` needs to function properly). An introduction to R Markdown is available on the [official website](https://rmarkdown.rstudio.com/articles_intro.html)^[RMarkdown is by now old generation. The new generation is `quarto`, covered in @sec-publish, which keeps all the RMarkdown traits while it simplifies even more the user-experience.].
+
+```{r installrmdn, eval=FALSE,echo=TRUE}
+# installs package `rmarkdown` and all dependencies
+install.packages("rmarkdown", dependencies = TRUE)
+```
+
+After the package `rmarkdown`, including its dependencies, is successfully installed, we should be able to create and work in .Rmd files.
+
+Create your first `.Rmd` file and give it a name. For example, `example.Rmd`. You should see it now lower-right panel Files/Packages/Help.
+
+![Create your first RMarkdown file](img/rmdfile.png){.lightbox width=50% #fig-1strmd}
+
+:::{.callout-tip #tip-Rproj}
+## Workflow simplified with projects
+I recommend always working with `R projects` which makes it easy for code dependencies and gives structure to your work flow. To associate your project to an `.Rproj`, go to File and create a New project. Make sure you associate the current folder you are working in with the `Rproj`. This [guide](https://bookdown.org/daniel_dauber_io/r4np_book/starting-your-r-projects.html) can help further.
+:::
+
+Once the `.Rmd` has been created, you should be able to open and edit it. It should look like this.
+
+![RMarkdown document](img/rmarkdown.png){.lightbox width=75% #fig-rmd}
+
+In @fig-rmd there are numbered lines from 1 to 30. These indicate lines in the `rmarkdown` file. We refer to these to discuss elements of the file. 
+
+- **Lines 1 through 5** (note the `---`) hold the `yaml` header element. Here is where you indicate the characteristics of the entire `rmarkdown` document, and it includes for example the kind of `output` file you want generated, `title` of the document or `date` of the document version. Many other `yaml` attributes exist and depending on your goals, you can easily find them online using a version of the search string `yaml rmarkdown attributes`. 
+
+- **Lines 7 through 9** (as well as 17-20 and 25-27) are `code chunks`. In this case, they are `r` code chunks, as signaled by the small letter `r`. Code chunks are what makes `rmarkdown` documents so powerful. Integrating code chunks into text facilitates the creation of live documents. In other words, plain text merged with code. Each code chunk has multiple attributes that can modify the way the output of the code is integrated and presented in the output document. Note for example at line 7 `{r setup, include=FALSE}`. 
+  - `setup` is the name of the code chunk and this is extremely helpful to give structure to the document but also when cross-referencing figures and tables in the document. 
+  - `,` the comma is crucial here because it signals that what follows are settings of the code ouput
+  - `include=FALSE` is one such setting attribute and indicates that the code output is not integrated in the output document BUT it runs in the background.
+
+## Knit {-}
+
+![](img/rmarkdownflow.png){.lightbox width=50% #fig-rmdnflow}
+
+@fig-rmdnflow is an overview of the workflow from an `.Rmd` (editable `rmarkdown` document) to an output document which can be `.pdf`, `.html`, `.docx` and so on. One crucial step happens during the **knit** of `.Rmd` file. Basically, in this step you _knit_ everything from the `.Rmd` document together. The name comes from knitting, which is, well, creating something nice and creative from nothing. 
+
+![Knited bike cover](img/knitbke.jpg){.lightbox width=55% #fig-knitbike}
+
+In fact, the very @fig-knitbike above was knited to the final document.
+
+The `knit` function comes pre-installed with `RStudio` and can be found in the source panel. Identify it, and knit your first `.Rmd` file first into a `.pdf` and then into a `.html` file. 
+
+:::{.callout-tip #tip-latex}
+## Latex distributions for PDF
+If knit to PDF didn't work, it might be because we need a latex distribution on the machine that `r` can work with. Try installing the package `tinytex` (Read more on https://yihui.org/tinytex/)
+:::
+
+```{r, eval=FALSE, echo=TRUE}
+# to install tinytex distribution 
+install.packages('tinytex')
+tinytex::install_tinytex()
+# to uninstall TinyTeX, run tinytex::uninstall_tinytex() 
+```
+
+Once you `knit` the `.Rmd` file, a new file will be created in the designated folder. Voilà - you just created your first PDF and/ or HTML document.
+
+## Live documents {-}
+
+For the purpose of this seminar, I call live documents those documents that are coded to retrieve data and/ or information from external source material (e.g., datasets or meta-data such as from Excel sheets). This is the building block for creating all sorts of automatized reports. 
+
+### Path dependencies
+
+Since we are working inside an `.Rproj`, all dependencies are already set up. This helps because when interacting with external source material we need to specify where the code should look for it. This is possible also without working in an `.Rproj` but the dependencies are increasingly more complex to set up. For one, the migration from one operating system to the other may break these dependecies. Furthermore, you need to find the file path on the local machine and then include it in the code. Note that in case of deploying (uploading) the project on `GitHub` the code will break because, of course, the dependencies are only locally relevant. If, however, we work in `.Rproj` and we push all the project files on `GitHub`, then we need not worry about file paths, these are by default set up through the use of the project. 
+
+Return to the first `.Rmd` we previously created. Open it in `RStudio`. 
+
+Once opened, we may choose to delete the default content, leaving only the `yaml` header intact. Or we may choose to keep the default content. I choose to delete it for the sake of simplicity. 
+
+### The set up
+
+We can start by setting up the work environment. This means, we should first install the packages we'd need in the process.
+
+We install using `pacman` the packages `tidyverse`, `readxl` (for reading Excel sheets), `haven` (for reading SPSS files), `sjlabelled` (for dealing with labelled dataframes), `kable` and `kableExtra` (for creating tables).
+
+```{r , eval=FALSE, echo=TRUE}
+install.packages("pacman")
+
+pacman::p_load(tidyverse,readxl,haven,sjlabelled,kable, kableExtra)
+# note: this exact code chunk might end up looking differently in the short book
+# this is becauase i'd install packages as needed
+```
+
+### Importing data
+
+Next, we import our dataset in `.sav` format and the Excel sheet in `.xlsx` format. This will allow us access to the contents of those external source material which we can integrate in our final document. 
+
+To import these external source material, remember to use objects to store that information. In other words, we import the source material and assing it to objects that we can then perform varying actions onto. 
+
+```{r, echo=TRUE}
+# create an object dataframe example `dfex` and assign to it the .sav file `sample.sav` that was introduced previously
+dfex<-haven::read_sav("data/sample.sav")
+
+# create an object movies metadata `dfmv` and assign to it the .xlsx file `movies.xlsx`
+# note the different paths to these files
+# note that we specify which sheet to read too; here only sheet 1 is imported
+dfmv<-readxl::read_excel("mat/movies.xlsx",1)
+
+# next, we check if the source material was imported successfully by observing the first lines in the tables
+head(dfex)
+head(dfmv)
+```
+
+![Example .Rmd file](img/example-autom1.png){.lightbox width=55% #fig-exrmd1}
+
+If all went well, your `.Rmd` should look similar to mine (see @fig-exrmd1).
+
+### Plain text vs. live text
+
+In some ways, what we have coded thus far is also an automatized work routine in that the `.Rmd` document automatically retrieves the external source material every single time when it is `knit`-ed into a PDF or HTML file. 
+
+This is however not so helpful because the display of those contents are static, or as plain information. Static in the sense that we would still have to read and retrieve the desired summary and/ or information from specific combinations of rows-columns by hand. 
+
+With a bit of work we can transition from plain text to live text. And here is where the proper automatization of the work flow begins. 
+
+With live text, or in-line code, we can integrate code chunks into plain text so that through `knit` function `rmarkdown` automatically enhances the plain text with the desired information from the external source material. This can be extremely helpful when writing repetitive reports, for instance Another example is when we want to quickly have a look at progress of a data collection process.
+
+The tricky part with live text is to know exactly what to retrieve from the external source material and in what kind of vector that information is stored. Character (text) and numerical vectors behave differently and have different characteristics. 
+
+Let us write our first short paragraph that integrates plain text and live text. 
+
+. . . 
+
+BEGIN EXAMPLE 
+
+This is an example of how automatization can be implemented in the work flow. My list of movies include `r nrow(dfmv)` entries. The title of those movies are `r dfmv$Movie`. Is there a movie that I actually don't like on that list, well, the answer is that I dislike exactly `r dfmv %>% filter(Like %in% c("No","no","NO")) %>% nrow()` movies on that list.
+
+END EXAMPLE
+
+. . . 
+
+This is tricky to observe here, so I attach an image of the actual `.Rmd` document. 
+
+![Live paragraph in .Rmd](img/example-autom2.png){.lightbox width=55% #fig-autom2}
+
+Copy the text from this code chunk into your `.Rmd` file and it should look like in @fig-autom2.
+
+```{r,eval=FALSE,echo=TRUE}
+This is an example of how automatization can be implemented in the work flow. My list of movies include `r nrow(dfmv)` entries. The title of those movies are `r dfmv$Movie`. Is there a movie that I actually don't like on that list, well, the answer is that I dislike exactly `r dfmv %>% filter(Like %in% c("No","no","NO")) %>% nrow()` movies on that list.
+
+```
+
+### Live text in focus
+
+We've seen that live text can be easily integrated into plain text to create a final document that looks nice. We've also seen that the actual `.Rmd` looks differently because of the in-line coding that supports the automatization of the document. 
+
+To write in-line code you only need to follow this simple structure `` `r
+1+1` ``. Wrap `r` inside backtrace brackets, add space followed by the code. 
+
+If we were to add to the list of movies new entries and we would still want to write that exact paragraph from above then we would simply `knit` the `rmarkdown` document and everything would be automated for us, including the counting of how many entries are in the list, what the title of those movies are and how many movies we actually dislike from that list. 
+
+To do this, open the Excel sheet using Microsoft Excel. Type in one or two new entries following the given structure. Save the Excel and then return to `RStudio` and `knit` the `.Rmd` file. You will notice how in the final document the newly added entries in the movie list are now part of the paragraph. 
+
+:::{.callout-tip #tip-autom}
+## Watch out for structure
+This automatization only works if the structure of the external source material remains unchanged with updates.
+:::
+### Automated graphs and tables
+
+One other benefit of working with automated reports is that tables and graphs are automatically updated with new data. This is rather straightforward - one needs to identify the preferred table format and graph layout, and integrate it in a report. With updated data, the report will automatically update contents of the created table and graphs. 
+
+To illustrate this, we work with sub-samples from the @Stanciuetal2017 dataset. 
+
+Remember that we have assigned the `sample.sav` dataset as `dfex` dataframe in _R_ previously. This dataframe contains information from _N_ = 100 study participants. See the dataset description in @sec-intro.
+
+We subset the `dfex` dataframe into a much smaller dataframe `dfex_1` containing _n_ = 15 study participants and a somewhat larger dataframe `dfex_2` containing _n_ = 60 study participants. 
+
+```{r,echo=TRUE}
+
+# we remove all the labels using the package sjlabelled and mutate
+# as factors columns gen and res
+# this step makes it easier later on to work with plots
+# note that it is not a necessary step in general but only for the sake of 
+# simplicity here
+dfex<-dfex %>% sjlabelled::remove_all_labels() %>% 
+  mutate(gen=factor(gen),
+         res=factor(res))
+
+# subsamples 15 study participants at random
+tmpdf1<-sample_n(dfex,15)
+# subsample 60 study participants at random
+tmpdf2<-sample_n(dfex,60)
+```
+
+#### Graphs
+
+We code a simple plot using the package `ggplot2` from `tidyverse` and submit the three dataframes to the code. 
+
+```{r}
+#| label: fig-stex
+#| fig-show: hold
+#| fig-cap: "Stereotype"
+#| fig-subcap: 
+#|   - "warmth"
+#|   - "competence"
+#| layout-ncol: 2
+
+dfex<-dfex %>% sjlabelled::remove_all_labels() %>% 
+  mutate(gen=factor(gen),
+         res=factor(res))
+
+ggplot(dfex, aes(x=gen, y=wom_warm)) + 
+  labs(x="Gender",
+       y="Stereotype of warmth") +
+  geom_boxplot() + 
+  theme_light()
+
+ggplot(dfex, aes(x=gen, y=wom_comp)) + 
+  labs(x="Gender",
+       y="Stereotype of competence") + 
+  geom_boxplot() + 
+  theme_light()
+```
+
+Let us now create this imaginary scenario. We save the two smaller `dfex` on the local machine as `.sav` datasets. This step is usually not necessary when the dataset you want to use gets updated by itself. 
+
+```{r,eval=FALSE,echo=TRUE}
+haven::write_sav(tmpdf1,"data/tmpdf1.sav")
+haven::write_sav(tmpdf2,"data/tmpdf2.sav")
+```
+
+Now, we're going to pretend that `tmpdf1`, `tmpdf2` and `dfex` are all progressive datasets, meaning that the sample size _N_ increases from 15 in `tmpdf1` to 100 in `dfex.` We're then going to ask for the sample graphs as above in each of the three instances. I won't cover this step here in detail but this can be easily done independently using this small twist.
+
+```{r,eval=FALSE,echo=TRUE}
+# import dataset into one object and then subject this object to the ggplot code
+
+# 1 - imports dataset into object tempdf
+tempdf<-haven::read_sav("data/tmpdf1.sav")
+
+# 2 - applies the ggplot to the dataset
+ggplot(tempdf, aes(x=gen, y=wom_warm)) + 
+  labs(x="Gender",
+       y="Stereotype of warmth") +
+  geom_boxplot() + 
+  theme_light()
+
+ggplot(tempdf, aes(x=gen, y=wom_comp)) + 
+  labs(x="Gender",
+       y="Stereotype of competence") + 
+  geom_boxplot() + 
+  theme_light()
+
+
+# 3 - for illustration purposes, repeat step 1 with each 
+# of the three datasets (tmpdf1,tmpdf2 and dfex) 
+# making sure they are assigned into the same object tempdf. 
+# As long as the ggplot code is applied to a dataset with the same structure
+# and variable labels the output will be updated automatically.
+```
+
+![Automated graphs](img/example-autom3.png){.lightbox width=55% #fig-autom3}
+
+If all went well, your `.Rmd` would look similar to mine (see @fig-autom3). 
+
+#### Tables
+
+You can `knit` a table to your document using `knitr`, `kable` and/ or `kableExtra` packages. Note that there can be differences in whether or not a package returns the desired table layout depending on whether the final `knit`-ed document is in PDF or HTML format. For the sake of simplicity, we only focus in this short book on final documents in HTML format. 
+
+```{r,echo=TRUE}
+dfmv %>% knitr::kable(caption="Simple table using knitr::kable()",format = "pipe")
+```
+
+This is a simple task: Import Excel tables in _R_ and then integrate the contents into a final output document. But, imagine you'd want to manipulate somehow the contents of the source material table and create your own table that can be automatically updated with new input in the source material table. 
+
+For instance, you might want to create a table of all the movies listed in the source material table where an actor you admire appears in addition to your least liked actor. Say, _Keanu Reeves_ is a liked actor whereas _Alec Baldwin_ might be a least liked actor. 
+
+```{r,echo=TRUE}
+# does some data manipulation to retrieve the required information
+tmptbl<-dfmv %>% 
+  filter(Actor %in% c("Keanu Reeves", "Alec Baldwin"))
+
+# creates an empty table holder that is our summary table that we'd
+# want to include in the final output document
+extbl<-tibble(
+  
+  like=tmptbl[ tmptbl$Grade >= 8 & tmptbl$Like %in% c("Yes","No"), ]$Like,
+  name=tmptbl[ tmptbl$Grade >= 8 & tmptbl$Like %in% c("Yes","No"), ]$Actor,
+  movie=tmptbl[ tmptbl$Grade >= 8 & tmptbl$Like %in% c("Yes","No"), ]$Movie,
+  wiki=tmptbl[ tmptbl$Grade >= 8 & tmptbl$Like %in% c("Yes","No"), ]$Wikilink
+  
+)
+```
+
+Now we `knit` the table to the final document. Note that in this particular case no movie by actor Alec Baldwin was listed in the external source material.
+
+```{r, echo=TRUE}
+extbl %>% knitr::kable(caption="Movies graded 8 or more from liked and least like actors", format="pipe")
+```
+
+Open Microsoft Excel `movies.xlsx` and add one or more movies by actor **Alec Baldwin** while pretending you dislike the author. Or, you modify the code above and replace the two actors with actors you dislike and like and update the Excel sheet accordingly making sure you maintain the sheet structure. 
+
+Then run the code and you should be able to see updated tables now. The code should like something like in @fig-autom4.
+
+![Code for tables in .Rmd](img/example-autom4.png){.lightbox width=55% #fig-autom4}
+
+## Knit with parameters {-}
+
+One way to simplify even more the tasks in automatization of the workflow is to use parameters in `knit`-ing a final document. More on working with parameters, and how to publish parameterized reports, can be read [here](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html).
+
+Parameters are characteristics of the document that are repetitive both throughout the document and along the iteration of various versions of the document. 
+
+Say, you'd want to automatize the writing of a report in each year so the year is a parameter of the report because data, text and tables will have to refer to the in-focus year and thus update the document accordingly.
+
+Say, you'd want to automatize the analysis of data in ways that tables and graphs are identical but for the grouping variable and year of data collection. Grouping variable and year of data publication are parameters of the document because they repeatedly appear throughout the code. 
+
+What makes working with parameters useful is the dynamic and user interface this approach brings to automatization of the work flow. Imagine that you'd want colleagues or superiors to easily have access to repeated reports but they do not posses the coding skills required. You can create a parameterized report for them and they can use a simple user interface (`shiny` interface that will be covered in details in @sec-apps) to retrieve the documents they are interested in. 
+
+### Example progression
+
+We can transform parts of the `.Rmd` example into parameters and then `knit` the final document using a user interface. 
+
+An intuitive parameter is the name of actors in the Excel sheet `movies.xlsx`. We have seen that actors Keanu Reeves and Alec Baldwin are liked and not so liked but, most importantly, we have seen that if one adds entries to that external source material the table will be updated. But, now imagine that we want to personalize that list of movies with our very own liked and disliked actors. 
+
+We could also parameterize which of the stereotype evaluation we'd want to use for graph creation. Remember there were four such variables in the `sample.sav` dataset, two each for men and women and each gender was evaluated in view of warmth and competence. 
+
+### Changing setup to parameterized report
+
+To work with parameters, we first need to define what these are in the `yaml` of the `rmarkdown` document. 
+
+![Modified yaml header for paramtereized reports in .Rmd](img/example-autom5.png){.lightbox width=55% #fig-autom5}
+
+In @fig-autom5, I highlighted brownish the modification from the previous `.Rmd` file. Throughout the code lines 5--18, we've added two parameters (`actor` and `stereotype`) to the `rmarkdown` document, which are introduced by the `yaml` attribute `params: `. These parameters are assigned to objects that can be used in `r` as seen in the code chunk at lines 36--42.
+
+![Modified code for paramterized reports in .Rmd modified](img/example-autom6.png){.lightbox width=55% #fig-autom6}
+
+To accommodate parameters in the previously written code, we need to make some small modifications to the code as seen in @fig-autom6. Red arrows point to the exact location of parameters in the modified code.
+
+:::{.callout-tip #tip-dfmodif}
+## Dataframe modification
+Note in @fig-autom5 (or @fig-autom6 for that matter) that we've slightly modified the dataframe so that it gets easier to pass it through parameterization. See lines 91--93 where we've modified the data structure to long format.
+
+:::
+
+### Knitting the document
+
+`knit`-ing a document with parameters is as simple as 1-2-3. 
+
+![Knit with parameters](img/example-autom7.png){.lightbox width=55% #fig-autom7}
+
+Once the parameterized `rmarkdown` is built, we can `knit` it with parameters as show in @fig-autom7.
+
+Nagvigate to the `knit` button as indicated by the red arrow, open the drop-down menu and from there select "knit with parameters" and following, a window as indicated in @fig-autom7 will appear. 
+
+We recognize the two parameters we set up above in the `yaml` header and used throughout the code: "Actor" and "Stereotype evaluation". Note that these are changeble parameter traits meaning that in the `yaml` header we can use the attribute `label` to re-label as per our preference. 
+
+We have set the attribute `input: select` in both cases to indicate how the parameter behaves. With `input: select`, we indicate a list of choices to the parameter from which we can then select only one (case of `stereotype`) or multiple (case of `actor`). 
+
+### Something to do by yourself 
+
+Going back to the "Knit with Parameters" window, all the choices we have pre-programmed will appear here. This also mean that if we want to add something, we can simply add it to the `yaml` header and the `r` code will automatically recognize it. Beautiful, clean, and easy. 
+
+Play with the "Knit with Parameters" a bit. You could, for example, add to the list of actors **Timothee Chalamet** while deleting one of the other actors. See what happens in the window and in the `knit`-ed output document. 
+
+To make things a bit more advanced, open the Microsoft Excel file and add new entries making sure you follow the preset format. Update as desired the choice list in the `yaml` header and then knit using parameters. What output do you get?
+
+### Another table example
+
+One other way to work with parameterized reports is to code the document such that it creates tables (or anything else for that matter) using a specific dataset. Basically, if the dataset format is identical but contains different _N_ sizes or was collected by different teams or at different times, then parameterized reports can facilitate the creation of repeated reports at a button's click.
+
+Remember, we first need to set up the new parameter in the `yaml` header. Try it yourself following the steps above and then use the code below. 
+
+```{r, eval=FALSE, echo=TRUE}
+# we assign the parameter sampledf to an object sampledf 
+# containing the dataset itself
+# we use paste0() function to integrate the parameter into a string object
+# that tells r where to find the dataset in the .Rproj (the file path) 
+sampledf<-paste0("data/",params$sampledf)
+sampledf
+
+abc<-haven::read_sav(sampledf)
+head(abc) # shows the first lines in the data frame
+nrow(abc) # shows the n size of the data frame
+```
+
+```{r, eval=FALSE, echo=TRUE}
+# assign parameterized data to an object dataframe
+abc %>% 
+  sjlabelled::remove_all_labels() %>% 
+  pivot_longer(contains("warm") | contains("comp")) %>% 
+  group_by(name) %>% # we group by variable name created previously (background step)
+  summarise(mean=mean(value, na.rm = TRUE), # we use missing remove (na.rm)
+            sd=sd(value, na.rm = TRUE),
+            min=min(value, na.rm = TRUE),
+            max=max(value, na.rm = TRUE))
+```
+
+## Advanced resources {-}
+
+In this day and age, technology evolves with mind-blowing speeds. This makes it hard to always keep up. Such happens also with the universe of tools available in `r`. 
+
+### Towards shiny apps
+
+Paramterized reports use a shiny user interface. We will cover `shiny apps` in @sec-apps. But for now be as creative as possible. 
+
+For example, think of a nice graph you could build plotting the age of study participants and their stereotypical evaluation of men and women in terms of warmth and competence. Use the `sample.sav` or the shorter datasets we created previously. 
+
+Create a new parameter `age` having the `input: slider` attribute. An example of how to do it is given [here](https://bookdown.org/yihui/rmarkdown/params-knit.html). Either follow that example or try doing it by yourself.
+
+### Quarto 
+
+Building on `rmakrdown` et co., the relative `quarto` is making everything much, much easier. Once the basics of `rmarkdown` are secured, the transition to `quarto` is extremely smooth.^[We cover `quarto` begining with @sec-publish.] 
+
+What is `quarto` and what makes it so advantageous? See for yourself [here](https://quarto.org/docs/gallery/).
+
+Use `quarto` to create presentation slides using the `revealjs` format. Start from [here](https://quarto.org/docs/presentations/revealjs/).
+
+:::{.callout-tip #tip-qppt}
+## Presentations in Quarto
+Build on the code we've covered so far. Write text, dynamic text from data, and incorporate images in your presentation slides created in Quarto.
+:::

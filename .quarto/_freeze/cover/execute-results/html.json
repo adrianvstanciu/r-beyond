@@ -1,0 +1,15 @@
+{
+  "hash": "fb24037e95517077f384de556dde301a",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# {.unnumbered}\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

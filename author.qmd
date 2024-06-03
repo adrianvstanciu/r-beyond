@@ -1,0 +1,18 @@
+# About the author {-}
+
+[![](img/stanciu.png){ width=50% fig-align="center"}](https://adrianstanciu.eu/index.html)
+
+:::aside
+Some of the images used throughout this short book were generated using Microsoft Copilot.
+:::
+
+[Dr. Adrian STANCIU](https://www.uni.lu/fhse-en/people/adrian-stanciu/) is assistant professor in lifespan developmental psychology (focus on adult development and digitization) at the University of Luxembourg. He studies how through digital technologies the life quality and health of older migrants can be improved and sustained longterm. He is likewise researching on human values, mental health, and methodology of assessment, often in international collaborations and in an interdisciplinary approach.
+
+:::aside
+Note that this short book is self-published online adhering to the creative common licensing CC BY-NC. All the copyrights are reserved by the author, *Asst. Prof. Dr. Adrian Stanciu*. 
+:::
+
+:::aside
+If you are not sure how to use and/ redistribute its contents, see for details [here](https://creativecommons.org/licenses/by-nc/4.0/). 
+:::
+

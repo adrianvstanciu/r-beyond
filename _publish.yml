@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: 6501adb8-3d61-4e54-88b3-60720f5eb7ce
+      url: 'https://adrian-stanciu.quarto.pub/r-beyond-data-analysis'

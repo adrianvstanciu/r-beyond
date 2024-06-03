@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course material for the seminar.">
+
+<title>R beyond data analysis - 3&nbsp; Automatization</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./publish.html" rel="next">
+<link href="./runiv.html" rel="prev">
+<link href="./img/logo.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta name="citation_title" content="[[3]{.chapter-number}&nbsp; [Automatization]{.chapter-title}]{#sec-autom .quarto-section-identifier}">
+<meta name="citation_language" content="en">
+<meta name="citation_reference" content="citation_title=Dynamic documents with R and knitr;,citation_author=Yihui Xie;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=http://yihui.name/knitr/;">
+<meta name="citation_reference" content="citation_title=Within-culture variation in the content of stereotypes: Application and development of the stereotype content model in an eastern european culture;,citation_author=A. Stanciu;,citation_author=C. J. Cohrs;,citation_author=K. Hanke;,citation_author=A. Gavreliuc;,citation_publication_date=2017;,citation_cover_date=2017;,citation_year=2017;,citation_issue=5;,citation_doi=10.1080/00224545.2016.1262812;,citation_volume=157;,citation_journal_title=The Journal of Social Psychology;">
+<meta name="citation_reference" content="citation_title=Extending the theory of planned behavior: A review and avenues for further research;,citation_author=M. Conner;,citation_author=Christopher J. Armitage;,citation_publication_date=1998;,citation_cover_date=1998;,citation_year=1998;,citation_issue=15;,citation_doi=10.1111/j.1559-1816.1998.tb01685.x;,citation_volume=28;,citation_journal_title=Journal of Applied Social Psychology;">
+<meta name="citation_reference" content="citation_title=Predicted as observed? How to identify empirically adequate theoretical constructs;,citation_author=undefined Witte;,citation_author=undefined Stanciu;,citation_author=F. Zenker;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_doi=10.3389/fpsyg.2022.980261;,citation_volume=13;,citation_journal_title=Frontiers in Psychology;">
+<meta name="citation_reference" content="citation_title=Error theory of mental test scores without and with a measurement instrument;,citation_author=undefined Witte;,citation_author=A. Stanciu;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://doi.org/10.31219/osf.io/9ap6m;">
+<meta name="citation_reference" content="citation_title=R: A language and environment for statistical computing;,citation_author=R Core Team;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://www.R-project.org/;">
+<meta name="citation_reference" content="citation_title=Bookdown: Authoring books and technical documents with r markdown;,citation_author=Yihui Xie;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://github.com/rstudio/bookdown;">
+<meta name="citation_reference" content="citation_title=Knitr: A general-purpose package for dynamic report generation in r;,citation_author=Yihui Xie;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://yihui.org/knitr/;">
+<meta name="citation_reference" content="citation_title=Rmarkdown: Dynamic documents for r;,citation_author=JJ Allaire;,citation_author=Yihui Xie;,citation_author=Christophe Dervieux;,citation_author=Jonathan McPherson;,citation_author=Javier Luraschi;,citation_author=Kevin Ushey;,citation_author=Aron Atkins;,citation_author=Hadley Wickham;,citation_author=Joe Cheng;,citation_author=Winston Chang;,citation_author=Richard Iannone;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://github.com/rstudio/rmarkdown;">
+<meta name="citation_reference" content="citation_title=Bookdown: Authoring books and technical documents with R markdown;,citation_author=Yihui Xie;,citation_publication_date=2016;,citation_cover_date=2016;,citation_year=2016;,citation_fulltext_html_url=https://bookdown.org/yihui/bookdown;,citation_isbn=978-1138700109;">
+<meta name="citation_reference" content="citation_title=Dynamic documents with R and knitr;,citation_author=Yihui Xie;,citation_publication_date=2015;,citation_cover_date=2015;,citation_year=2015;,citation_fulltext_html_url=https://yihui.org/knitr/;">
+<meta name="citation_reference" content="citation_title=Knitr: A comprehensive tool for reproducible research in R;,citation_author=Yihui Xie;,citation_editor=Victoria Stodden;,citation_editor=Friedrich Leisch;,citation_editor=Roger D. Peng;,citation_publication_date=2014;,citation_cover_date=2014;,citation_year=2014;,citation_inbook_title=Implementing reproducible computational research;">
+<meta name="citation_reference" content="citation_title=R markdown: The definitive guide;,citation_author=Yihui Xie;,citation_author=J. J. Allaire;,citation_author=Garrett Grolemund;,citation_publication_date=2018;,citation_cover_date=2018;,citation_year=2018;,citation_fulltext_html_url=https://bookdown.org/yihui/rmarkdown;,citation_isbn=9781138359338;">
+<meta name="citation_reference" content="citation_title=R markdown cookbook;,citation_author=Yihui Xie;,citation_author=Christophe Dervieux;,citation_author=Emily Riederer;,citation_publication_date=2020;,citation_cover_date=2020;,citation_year=2020;,citation_fulltext_html_url=https://bookdown.org/yihui/rmarkdown-cookbook;,citation_isbn=9780367563837;">
+<meta name="citation_reference" content="citation_title=aRtsy: Generative art with ’ggplot2’;,citation_author=Koen Derks;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://CRAN.R-project.org/package=aRtsy;">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./autom.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Automatization</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R beyond data analysis</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-save"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./data/sample.sav">
+            Stereotype data .sav
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/movies.xlsx">
+            Actor data .xlsx
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/Examples rmd.zip">
+            Examples .rmd
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/Example book.zip">
+            Example book
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./mat/Example shiny.zip">
+            Example shiny
+            </a>
+          </li>
+      </ul>
+    </div>
+    <a href="./R-beyond-data-analysis.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">General introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./runiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R universe</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./autom.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Automatization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./publish.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Self-publish</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shiny apps</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./outro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Parting words</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#elements-and-structure" id="toc-elements-and-structure" class="nav-link active" data-scroll-target="#elements-and-structure">Elements and structure</a></li>
+  <li><a href="#knit" id="toc-knit" class="nav-link" data-scroll-target="#knit">Knit</a></li>
+  <li><a href="#live-documents" id="toc-live-documents" class="nav-link" data-scroll-target="#live-documents">Live documents</a>
+  <ul class="collapse">
+  <li><a href="#path-dependencies" id="toc-path-dependencies" class="nav-link" data-scroll-target="#path-dependencies"><span class="header-section-number">3.0.1</span> Path dependencies</a></li>
+  <li><a href="#the-set-up" id="toc-the-set-up" class="nav-link" data-scroll-target="#the-set-up"><span class="header-section-number">3.0.2</span> The set up</a></li>
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data"><span class="header-section-number">3.0.3</span> Importing data</a></li>
+  <li><a href="#plain-text-vs.-live-text" id="toc-plain-text-vs.-live-text" class="nav-link" data-scroll-target="#plain-text-vs.-live-text"><span class="header-section-number">3.0.4</span> Plain text vs.&nbsp;live text</a></li>
+  <li><a href="#live-text-in-focus" id="toc-live-text-in-focus" class="nav-link" data-scroll-target="#live-text-in-focus"><span class="header-section-number">3.0.5</span> Live text in focus</a></li>
+  <li><a href="#automated-graphs-and-tables" id="toc-automated-graphs-and-tables" class="nav-link" data-scroll-target="#automated-graphs-and-tables"><span class="header-section-number">3.0.6</span> Automated graphs and tables</a></li>
+  </ul></li>
+  <li><a href="#knit-with-parameters" id="toc-knit-with-parameters" class="nav-link" data-scroll-target="#knit-with-parameters">Knit with parameters</a>
+  <ul class="collapse">
+  <li><a href="#example-progression" id="toc-example-progression" class="nav-link" data-scroll-target="#example-progression"><span class="header-section-number">3.0.7</span> Example progression</a></li>
+  <li><a href="#changing-setup-to-parameterized-report" id="toc-changing-setup-to-parameterized-report" class="nav-link" data-scroll-target="#changing-setup-to-parameterized-report"><span class="header-section-number">3.0.8</span> Changing setup to parameterized report</a></li>
+  <li><a href="#knitting-the-document" id="toc-knitting-the-document" class="nav-link" data-scroll-target="#knitting-the-document"><span class="header-section-number">3.0.9</span> Knitting the document</a></li>
+  <li><a href="#something-to-do-by-yourself" id="toc-something-to-do-by-yourself" class="nav-link" data-scroll-target="#something-to-do-by-yourself"><span class="header-section-number">3.0.10</span> Something to do by yourself</a></li>
+  <li><a href="#another-table-example" id="toc-another-table-example" class="nav-link" data-scroll-target="#another-table-example"><span class="header-section-number">3.0.11</span> Another table example</a></li>
+  </ul></li>
+  <li><a href="#advanced-resources" id="toc-advanced-resources" class="nav-link" data-scroll-target="#advanced-resources">Advanced resources</a>
+  <ul class="collapse">
+  <li><a href="#towards-shiny-apps" id="toc-towards-shiny-apps" class="nav-link" data-scroll-target="#towards-shiny-apps"><span class="header-section-number">3.0.12</span> Towards shiny apps</a></li>
+  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><span class="header-section-number">3.0.13</span> Quarto</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-autom" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Automatization</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/automate.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="img/automate.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></a></p>
+</figure>
+</div>
+<p>Automatization of the work flow, as I mean it throughout the seminar, is a holistic or integrated approach to the work flow whereby repetitive tasks can be reduced through the use of code and a designated work environment.</p>
+<p>This approach can be useful to reduce working time, ensuring reproducible outcome as well as enhancing work transparency.</p>
+<p>Among the domains where this is an asset are:</p>
+<ol type="a">
+<li>Research: Data analysis and results interpretation, writing manuscripts, and adhering to open science.</li>
+<li>Applied sector: Writing of repetitive reports.</li>
+<li>Education: Transparent homework.</li>
+</ol>
+<p>This chapter covers the basics of creating and working in an integrated work environment.</p>
+<section id="elements-and-structure" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="elements-and-structure">Elements and structure</h2>
+<p>The first thing we need is to install the package <code>rmarkdown</code> (and all dependencies, meaning all the packages that <code>rmarkdown</code> needs to function properly). An introduction to R Markdown is available on the <a href="https://rmarkdown.rstudio.com/articles_intro.html">official website</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># installs package `rmarkdown` and all dependencies</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After the package <code>rmarkdown</code>, including its dependencies, is successfully installed, we should be able to create and work in .Rmd files.</p>
+<p>Create your first <code>.Rmd</code> file and give it a name. For example, <code>example.Rmd</code>. You should see it now lower-right panel Files/Packages/Help.</p>
+<div id="fig-1strmd" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1strmd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/rmdfile.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="img/rmdfile.png" class="img-fluid figure-img" style="width:50.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1strmd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Create your first RMarkdown file
+</figcaption>
+</figure>
+</div>
+<div id="tip-Rproj" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;3.1: Workflow simplified with projects
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I recommend always working with <code>R projects</code> which makes it easy for code dependencies and gives structure to your work flow. To associate your project to an <code>.Rproj</code>, go to File and create a New project. Make sure you associate the current folder you are working in with the <code>Rproj</code>. This <a href="https://bookdown.org/daniel_dauber_io/r4np_book/starting-your-r-projects.html">guide</a> can help further.</p>
+</div>
+</div>
+<p>Once the <code>.Rmd</code> has been created, you should be able to open and edit it. It should look like this.</p>
+<div id="fig-rmd" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rmd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/rmarkdown.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="img/rmarkdown.png" class="img-fluid figure-img" style="width:75.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rmd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: RMarkdown document
+</figcaption>
+</figure>
+</div>
+<p>In <a href="#fig-rmd" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> there are numbered lines from 1 to 30. These indicate lines in the <code>rmarkdown</code> file. We refer to these to discuss elements of the file.</p>
+<ul>
+<li><p><strong>Lines 1 through 5</strong> (note the <code>---</code>) hold the <code>yaml</code> header element. Here is where you indicate the characteristics of the entire <code>rmarkdown</code> document, and it includes for example the kind of <code>output</code> file you want generated, <code>title</code> of the document or <code>date</code> of the document version. Many other <code>yaml</code> attributes exist and depending on your goals, you can easily find them online using a version of the search string <code>yaml rmarkdown attributes</code>.</p></li>
+<li><p><strong>Lines 7 through 9</strong> (as well as 17-20 and 25-27) are <code>code chunks</code>. In this case, they are <code>r</code> code chunks, as signaled by the small letter <code>r</code>. Code chunks are what makes <code>rmarkdown</code> documents so powerful. Integrating code chunks into text facilitates the creation of live documents. In other words, plain text merged with code. Each code chunk has multiple attributes that can modify the way the output of the code is integrated and presented in the output document. Note for example at line 7 <code>{r setup, include=FALSE}</code>.</p>
+<ul>
+<li><code>setup</code> is the name of the code chunk and this is extremely helpful to give structure to the document but also when cross-referencing figures and tables in the document.</li>
+<li><code>,</code> the comma is crucial here because it signals that what follows are settings of the code ouput</li>
+<li><code>include=FALSE</code> is one such setting attribute and indicates that the code output is not integrated in the output document BUT it runs in the background.</li>
+</ul></li>
+</ul>
+</section>
+<section id="knit" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="knit">Knit</h2>
+<div id="fig-rmdnflow" class="quarto-figure quarto-figure-center quarto-float anchored" width="50%">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rmdnflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/rmarkdownflow.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="img/rmarkdownflow.png" id="fig-rmdnflow" class="img-fluid figure-img" style="width:50.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-rmdnflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-rmdnflow" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> is an overview of the workflow from an <code>.Rmd</code> (editable <code>rmarkdown</code> document) to an output document which can be <code>.pdf</code>, <code>.html</code>, <code>.docx</code> and so on. One crucial step happens during the <strong>knit</strong> of <code>.Rmd</code> file. Basically, in this step you <em>knit</em> everything from the <code>.Rmd</code> document together. The name comes from knitting, which is, well, creating something nice and creative from nothing.</p>
+<div id="fig-knitbike" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-knitbike-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/knitbke.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5"><img src="img/knitbke.jpg" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-knitbike-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.4: Knited bike cover
+</figcaption>
+</figure>
+</div>
+<p>In fact, the very <a href="#fig-knitbike" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> above was knited to the final document.</p>
+<p>The <code>knit</code> function comes pre-installed with <code>RStudio</code> and can be found in the source panel. Identify it, and knit your first <code>.Rmd</code> file first into a <code>.pdf</code> and then into a <code>.html</code> file.</p>
+<div id="tip-latex" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;3.2: Latex distributions for PDF
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If knit to PDF didn’t work, it might be because we need a latex distribution on the machine that <code>r</code> can work with. Try installing the package <code>tinytex</code> (Read more on https://yihui.org/tinytex/)</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to install tinytex distribution </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'tinytex'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># to uninstall TinyTeX, run tinytex::uninstall_tinytex() </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once you <code>knit</code> the <code>.Rmd</code> file, a new file will be created in the designated folder. Voilà - you just created your first PDF and/ or HTML document.</p>
+</section>
+<section id="live-documents" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="live-documents">Live documents</h2>
+<p>For the purpose of this seminar, I call live documents those documents that are coded to retrieve data and/ or information from external source material (e.g., datasets or meta-data such as from Excel sheets). This is the building block for creating all sorts of automatized reports.</p>
+<section id="path-dependencies" class="level3" data-number="3.0.1">
+<h3 data-number="3.0.1" class="anchored" data-anchor-id="path-dependencies"><span class="header-section-number">3.0.1</span> Path dependencies</h3>
+<p>Since we are working inside an <code>.Rproj</code>, all dependencies are already set up. This helps because when interacting with external source material we need to specify where the code should look for it. This is possible also without working in an <code>.Rproj</code> but the dependencies are increasingly more complex to set up. For one, the migration from one operating system to the other may break these dependecies. Furthermore, you need to find the file path on the local machine and then include it in the code. Note that in case of deploying (uploading) the project on <code>GitHub</code> the code will break because, of course, the dependencies are only locally relevant. If, however, we work in <code>.Rproj</code> and we push all the project files on <code>GitHub</code>, then we need not worry about file paths, these are by default set up through the use of the project.</p>
+<p>Return to the first <code>.Rmd</code> we previously created. Open it in <code>RStudio</code>.</p>
+<p>Once opened, we may choose to delete the default content, leaving only the <code>yaml</code> header intact. Or we may choose to keep the default content. I choose to delete it for the sake of simplicity.</p>
+</section>
+<section id="the-set-up" class="level3" data-number="3.0.2">
+<h3 data-number="3.0.2" class="anchored" data-anchor-id="the-set-up"><span class="header-section-number">3.0.2</span> The set up</h3>
+<p>We can start by setting up the work environment. This means, we should first install the packages we’d need in the process.</p>
+<p>We install using <code>pacman</code> the packages <code>tidyverse</code>, <code>readxl</code> (for reading Excel sheets), <code>haven</code> (for reading SPSS files), <code>sjlabelled</code> (for dealing with labelled dataframes), <code>kable</code> and <code>kableExtra</code> (for creating tables).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse,readxl,haven,sjlabelled,kable, kableExtra)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># note: this exact code chunk might end up looking differently in the short book</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># this is becauase i'd install packages as needed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="importing-data" class="level3" data-number="3.0.3">
+<h3 data-number="3.0.3" class="anchored" data-anchor-id="importing-data"><span class="header-section-number">3.0.3</span> Importing data</h3>
+<p>Next, we import our dataset in <code>.sav</code> format and the Excel sheet in <code>.xlsx</code> format. This will allow us access to the contents of those external source material which we can integrate in our final document.</p>
+<p>To import these external source material, remember to use objects to store that information. In other words, we import the source material and assing it to objects that we can then perform varying actions onto.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create an object dataframe example `dfex` and assign to it the .sav file `sample.sav` that was introduced previously</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dfex<span class="ot">&lt;-</span>haven<span class="sc">::</span><span class="fu">read_sav</span>(<span class="st">"data/sample.sav"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create an object movies metadata `dfmv` and assign to it the .xlsx file `movies.xlsx`</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># note the different paths to these files</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># note that we specify which sheet to read too; here only sheet 1 is imported</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>dfmv<span class="ot">&lt;-</span>readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"mat/movies.xlsx"</span>,<span class="dv">1</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># next, we check if the source material was imported successfully by observing the first lines in the tables</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dfex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+    ppn gen          age res       res_other men_warm men_comp wom_warm wom_comp
+  &lt;dbl&gt; &lt;dbl+lbl&gt;  &lt;dbl&gt; &lt;dbl+lbl&gt; &lt;chr&gt;     &lt;dbl+lb&gt; &lt;dbl+lb&gt; &lt;dbl+lb&gt; &lt;dbl+lb&gt;
+1   459 1 [Female]    24  5 [Iasi] -99        3 [Und…  4 [Agr… 3 [Unde… 4 [Agre…
+2   592 2 [Male]      21  5 [Iasi] -99        3 [Und…  4 [Agr… 3 [Unde… 3 [Unde…
+3   634 2 [Male]      21 NA        petrosani  4 [Agr…  5 [Str… 4 [Agre… 4 [Agre…
+4   369 1 [Female]    30  8 [Gala… -99       NA       NA       4 [Agre… 4 [Agre…
+5   121 1 [Female]    21  4 [Timi… -99        4 [Agr…  3 [Und… 3 [Unde… 4 [Agre…
+6   127 1 [Female]    20  4 [Timi… -99        4 [Agr…  4 [Agr… 4 [Agre… 2 [Disa…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dfmv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  Movie                       Actor                 Like  Why     Grade Wikilink
+  &lt;chr&gt;                       &lt;chr&gt;                 &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;   
+1 John Wick                   Keanu Reeves          Yes   Fight …    10 https:/…
+2 Call me by your name        Timothee Chalamet     Yes   Beauti…    10 https:/…
+3 Terminator                  Arnold Schwarzenegger Yes   Arnold      9 https:/…
+4 4 months 3 weeks and 2 days &lt;NA&gt;                  Yes   Portra…     8 https:/…</code></pre>
+</div>
+</div>
+<div id="fig-exrmd1" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-exrmd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/example-autom1.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="img/example-autom1.png" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-exrmd1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.5: Example .Rmd file
+</figcaption>
+</figure>
+</div>
+<p>If all went well, your <code>.Rmd</code> should look similar to mine (see <a href="#fig-exrmd1" class="quarto-xref">Figure&nbsp;<span>3.5</span></a>).</p>
+</section>
+<section id="plain-text-vs.-live-text" class="level3" data-number="3.0.4">
+<h3 data-number="3.0.4" class="anchored" data-anchor-id="plain-text-vs.-live-text"><span class="header-section-number">3.0.4</span> Plain text vs.&nbsp;live text</h3>
+<p>In some ways, what we have coded thus far is also an automatized work routine in that the <code>.Rmd</code> document automatically retrieves the external source material every single time when it is <code>knit</code>-ed into a PDF or HTML file.</p>
+<p>This is however not so helpful because the display of those contents are static, or as plain information. Static in the sense that we would still have to read and retrieve the desired summary and/ or information from specific combinations of rows-columns by hand.</p>
+<p>With a bit of work we can transition from plain text to live text. And here is where the proper automatization of the work flow begins.</p>
+<p>With live text, or in-line code, we can integrate code chunks into plain text so that through <code>knit</code> function <code>rmarkdown</code> automatically enhances the plain text with the desired information from the external source material. This can be extremely helpful when writing repetitive reports, for instance Another example is when we want to quickly have a look at progress of a data collection process.</p>
+<p>The tricky part with live text is to know exactly what to retrieve from the external source material and in what kind of vector that information is stored. Character (text) and numerical vectors behave differently and have different characteristics.</p>
+<p>Let us write our first short paragraph that integrates plain text and live text.</p>
+<p>. . .</p>
+<p>BEGIN EXAMPLE</p>
+<p>This is an example of how automatization can be implemented in the work flow. My list of movies include 4 entries. The title of those movies are John Wick, Call me by your name, Terminator, 4 months 3 weeks and 2 days. Is there a movie that I actually don’t like on that list, well, the answer is that I dislike exactly 0 movies on that list.</p>
+<p>END EXAMPLE</p>
+<p>. . .</p>
+<p>This is tricky to observe here, so I attach an image of the actual <code>.Rmd</code> document.</p>
+<div id="fig-autom2" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autom2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/example-autom2.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="img/example-autom2.png" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autom2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.6: Live paragraph in .Rmd
+</figcaption>
+</figure>
+</div>
+<p>Copy the text from this code chunk into your <code>.Rmd</code> file and it should look like in <a href="#fig-autom2" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>This is an example of how automatization can be implemented <span class="cf">in</span> the work flow. My list of movies include <span class="st">`</span><span class="at">r nrow(dfmv)</span><span class="st">`</span> entries. The title of those movies are <span class="st">`</span><span class="at">r dfmv$Movie</span><span class="st">`</span>. Is there a movie that I actually don<span class="st">'t like on that list, well, the answer is that I dislike exactly `r dfmv %&gt;% filter(Like %in% c("No","no","NO")) %&gt;% nrow()` movies on that list.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="live-text-in-focus" class="level3" data-number="3.0.5">
+<h3 data-number="3.0.5" class="anchored" data-anchor-id="live-text-in-focus"><span class="header-section-number">3.0.5</span> Live text in focus</h3>
+<p>We’ve seen that live text can be easily integrated into plain text to create a final document that looks nice. We’ve also seen that the actual <code>.Rmd</code> looks differently because of the in-line coding that supports the automatization of the document.</p>
+<p>To write in-line code you only need to follow this simple structure <code>`r 1+1`</code>. Wrap <code>r</code> inside backtrace brackets, add space followed by the code.</p>
+<p>If we were to add to the list of movies new entries and we would still want to write that exact paragraph from above then we would simply <code>knit</code> the <code>rmarkdown</code> document and everything would be automated for us, including the counting of how many entries are in the list, what the title of those movies are and how many movies we actually dislike from that list.</p>
+<p>To do this, open the Excel sheet using Microsoft Excel. Type in one or two new entries following the given structure. Save the Excel and then return to <code>RStudio</code> and <code>knit</code> the <code>.Rmd</code> file. You will notice how in the final document the newly added entries in the movie list are now part of the paragraph.</p>
+<div id="tip-autom" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;3.3: Watch out for structure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This automatization only works if the structure of the external source material remains unchanged with updates.</p>
+</div>
+</div>
+</section>
+<section id="automated-graphs-and-tables" class="level3" data-number="3.0.6">
+<h3 data-number="3.0.6" class="anchored" data-anchor-id="automated-graphs-and-tables"><span class="header-section-number">3.0.6</span> Automated graphs and tables</h3>
+<p>One other benefit of working with automated reports is that tables and graphs are automatically updated with new data. This is rather straightforward - one needs to identify the preferred table format and graph layout, and integrate it in a report. With updated data, the report will automatically update contents of the created table and graphs.</p>
+<p>To illustrate this, we work with sub-samples from the <span class="citation" data-cites="Stanciuetal2017">Stanciu et al. (<a href="references.html#ref-Stanciuetal2017" role="doc-biblioref">2017</a>)</span> dataset.</p>
+<p>Remember that we have assigned the <code>sample.sav</code> dataset as <code>dfex</code> dataframe in <em>R</em> previously. This dataframe contains information from <em>N</em> = 100 study participants. See the dataset description in <a href="intro.html" class="quarto-xref"><span>Chapter 1</span></a>.</p>
+<p>We subset the <code>dfex</code> dataframe into a much smaller dataframe <code>dfex_1</code> containing <em>n</em> = 15 study participants and a somewhat larger dataframe <code>dfex_2</code> containing <em>n</em> = 60 study participants.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we remove all the labels using the package sjlabelled and mutate</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># as factors columns gen and res</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># this step makes it easier later on to work with plots</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># note that it is not a necessary step in general but only for the sake of </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># simplicity here</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>dfex<span class="ot">&lt;-</span>dfex <span class="sc">%&gt;%</span> sjlabelled<span class="sc">::</span><span class="fu">remove_all_labels</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gen=</span><span class="fu">factor</span>(gen),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">res=</span><span class="fu">factor</span>(res))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># subsamples 15 study participants at random</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>tmpdf1<span class="ot">&lt;-</span><span class="fu">sample_n</span>(dfex,<span class="dv">15</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># subsample 60 study participants at random</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>tmpdf2<span class="ot">&lt;-</span><span class="fu">sample_n</span>(dfex,<span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="graphs" class="level4" data-number="3.0.6.1">
+<h4 data-number="3.0.6.1" class="anchored" data-anchor-id="graphs"><span class="header-section-number">3.0.6.1</span> Graphs</h4>
+<p>We code a simple plot using the package <code>ggplot2</code> from <code>tidyverse</code> and submit the three dataframes to the code.</p>
+<div id="fig-stex" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-stex" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-stex-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-stex-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="autom_files/figure-html/fig-stex-1.png" class="img-fluid figure-img" data-ref-parent="fig-stex" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-stex-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) warmth
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-stex" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-stex-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-stex-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="autom_files/figure-html/fig-stex-2.png" class="img-fluid figure-img" data-ref-parent="fig-stex" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-stex-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) competence
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.7: Stereotype
+</figcaption>
+</figure>
+</div>
+<p>Let us now create this imaginary scenario. We save the two smaller <code>dfex</code> on the local machine as <code>.sav</code> datasets. This step is usually not necessary when the dataset you want to use gets updated by itself.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>haven<span class="sc">::</span><span class="fu">write_sav</span>(tmpdf1,<span class="st">"data/tmpdf1.sav"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>haven<span class="sc">::</span><span class="fu">write_sav</span>(tmpdf2,<span class="st">"data/tmpdf2.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we’re going to pretend that <code>tmpdf1</code>, <code>tmpdf2</code> and <code>dfex</code> are all progressive datasets, meaning that the sample size <em>N</em> increases from 15 in <code>tmpdf1</code> to 100 in <code>dfex.</code> We’re then going to ask for the sample graphs as above in each of the three instances. I won’t cover this step here in detail but this can be easily done independently using this small twist.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import dataset into one object and then subject this object to the ggplot code</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 - imports dataset into object tempdf</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>tempdf<span class="ot">&lt;-</span>haven<span class="sc">::</span><span class="fu">read_sav</span>(<span class="st">"data/tmpdf1.sav"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 - applies the ggplot to the dataset</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tempdf, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>wom_warm)) <span class="sc">+</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Gender"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Stereotype of warmth"</span>) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tempdf, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>wom_comp)) <span class="sc">+</span> </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Gender"</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Stereotype of competence"</span>) <span class="sc">+</span> </span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 - for illustration purposes, repeat step 1 with each </span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># of the three datasets (tmpdf1,tmpdf2 and dfex) </span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># making sure they are assigned into the same object tempdf. </span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co"># As long as the ggplot code is applied to a dataset with the same structure</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co"># and variable labels the output will be updated automatically.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="fig-autom3" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autom3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/example-autom3.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="img/example-autom3.png" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autom3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.8: Automated graphs
+</figcaption>
+</figure>
+</div>
+<p>If all went well, your <code>.Rmd</code> would look similar to mine (see <a href="#fig-autom3" class="quarto-xref">Figure&nbsp;<span>3.8</span></a>).</p>
+</section>
+<section id="tables" class="level4" data-number="3.0.6.2">
+<h4 data-number="3.0.6.2" class="anchored" data-anchor-id="tables"><span class="header-section-number">3.0.6.2</span> Tables</h4>
+<p>You can <code>knit</code> a table to your document using <code>knitr</code>, <code>kable</code> and/ or <code>kableExtra</code> packages. Note that there can be differences in whether or not a package returns the desired table layout depending on whether the final <code>knit</code>-ed document is in PDF or HTML format. For the sake of simplicity, we only focus in this short book on final documents in HTML format.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dfmv <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption=</span><span class="st">"Simple table using knitr::kable()"</span>,<span class="at">format =</span> <span class="st">"pipe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Simple table using knitr::kable()</caption>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 3%">
+<col style="width: 24%">
+<col style="width: 3%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Movie</th>
+<th style="text-align: left;">Actor</th>
+<th style="text-align: left;">Like</th>
+<th style="text-align: left;">Why</th>
+<th style="text-align: right;">Grade</th>
+<th style="text-align: left;">Wikilink</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">John Wick</td>
+<td style="text-align: left;">Keanu Reeves</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Fight scenes</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">https://en.wikipedia.org/wiki/John_Wick_(film)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Call me by your name</td>
+<td style="text-align: left;">Timothee Chalamet</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Beautiful love story</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">https://en.wikipedia.org/wiki/Call_Me_by_Your_Name_(film)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Terminator</td>
+<td style="text-align: left;">Arnold Schwarzenegger</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Arnold</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">https://en.wikipedia.org/wiki/The_Terminator</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4 months 3 weeks and 2 days</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Portrayal of life in communist Romania</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">https://en.wikipedia.org/wiki/4_Months%2C_3_Weeks_and_2_Days</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This is a simple task: Import Excel tables in <em>R</em> and then integrate the contents into a final output document. But, imagine you’d want to manipulate somehow the contents of the source material table and create your own table that can be automatically updated with new input in the source material table.</p>
+<p>For instance, you might want to create a table of all the movies listed in the source material table where an actor you admire appears in addition to your least liked actor. Say, <em>Keanu Reeves</em> is a liked actor whereas <em>Alec Baldwin</em> might be a least liked actor.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># does some data manipulation to retrieve the required information</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>tmptbl<span class="ot">&lt;-</span>dfmv <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Actor <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Keanu Reeves"</span>, <span class="st">"Alec Baldwin"</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># creates an empty table holder that is our summary table that we'd</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># want to include in the final output document</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>extbl<span class="ot">&lt;-</span><span class="fu">tibble</span>(</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">like=</span>tmptbl[ tmptbl<span class="sc">$</span>Grade <span class="sc">&gt;=</span> <span class="dv">8</span> <span class="sc">&amp;</span> tmptbl<span class="sc">$</span>Like <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Yes"</span>,<span class="st">"No"</span>), ]<span class="sc">$</span>Like,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">name=</span>tmptbl[ tmptbl<span class="sc">$</span>Grade <span class="sc">&gt;=</span> <span class="dv">8</span> <span class="sc">&amp;</span> tmptbl<span class="sc">$</span>Like <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Yes"</span>,<span class="st">"No"</span>), ]<span class="sc">$</span>Actor,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">movie=</span>tmptbl[ tmptbl<span class="sc">$</span>Grade <span class="sc">&gt;=</span> <span class="dv">8</span> <span class="sc">&amp;</span> tmptbl<span class="sc">$</span>Like <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Yes"</span>,<span class="st">"No"</span>), ]<span class="sc">$</span>Movie,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">wiki=</span>tmptbl[ tmptbl<span class="sc">$</span>Grade <span class="sc">&gt;=</span> <span class="dv">8</span> <span class="sc">&amp;</span> tmptbl<span class="sc">$</span>Like <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Yes"</span>,<span class="st">"No"</span>), ]<span class="sc">$</span>Wikilink</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we <code>knit</code> the table to the final document. Note that in this particular case no movie by actor Alec Baldwin was listed in the external source material.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>extbl <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption=</span><span class="st">"Movies graded 8 or more from liked and least like actors"</span>, <span class="at">format=</span><span class="st">"pipe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Movies graded 8 or more from liked and least like actors</caption>
+<colgroup>
+<col style="width: 6%">
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 62%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">like</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">movie</th>
+<th style="text-align: left;">wiki</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Keanu Reeves</td>
+<td style="text-align: left;">John Wick</td>
+<td style="text-align: left;">https://en.wikipedia.org/wiki/John_Wick_(film)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Open Microsoft Excel <code>movies.xlsx</code> and add one or more movies by actor <strong>Alec Baldwin</strong> while pretending you dislike the author. Or, you modify the code above and replace the two actors with actors you dislike and like and update the Excel sheet accordingly making sure you maintain the sheet structure.</p>
+<p>Then run the code and you should be able to see updated tables now. The code should like something like in <a href="#fig-autom4" class="quarto-xref">Figure&nbsp;<span>3.9</span></a>.</p>
+<div id="fig-autom4" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autom4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/example-autom4.png" class="lightbox" data-glightbox="description: .lightbox-desc-9" data-gallery="quarto-lightbox-gallery-9"><img src="img/example-autom4.png" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autom4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.9: Code for tables in .Rmd
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="knit-with-parameters" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="knit-with-parameters">Knit with parameters</h2>
+<p>One way to simplify even more the tasks in automatization of the workflow is to use parameters in <code>knit</code>-ing a final document. More on working with parameters, and how to publish parameterized reports, can be read <a href="https://bookdown.org/yihui/rmarkdown/parameterized-reports.html">here</a>.</p>
+<p>Parameters are characteristics of the document that are repetitive both throughout the document and along the iteration of various versions of the document.</p>
+<p>Say, you’d want to automatize the writing of a report in each year so the year is a parameter of the report because data, text and tables will have to refer to the in-focus year and thus update the document accordingly.</p>
+<p>Say, you’d want to automatize the analysis of data in ways that tables and graphs are identical but for the grouping variable and year of data collection. Grouping variable and year of data publication are parameters of the document because they repeatedly appear throughout the code.</p>
+<p>What makes working with parameters useful is the dynamic and user interface this approach brings to automatization of the work flow. Imagine that you’d want colleagues or superiors to easily have access to repeated reports but they do not posses the coding skills required. You can create a parameterized report for them and they can use a simple user interface (<code>shiny</code> interface that will be covered in details in <a href="apps.html" class="quarto-xref"><span>Chapter 5</span></a>) to retrieve the documents they are interested in.</p>
+<section id="example-progression" class="level3" data-number="3.0.7">
+<h3 data-number="3.0.7" class="anchored" data-anchor-id="example-progression"><span class="header-section-number">3.0.7</span> Example progression</h3>
+<p>We can transform parts of the <code>.Rmd</code> example into parameters and then <code>knit</code> the final document using a user interface.</p>
+<p>An intuitive parameter is the name of actors in the Excel sheet <code>movies.xlsx</code>. We have seen that actors Keanu Reeves and Alec Baldwin are liked and not so liked but, most importantly, we have seen that if one adds entries to that external source material the table will be updated. But, now imagine that we want to personalize that list of movies with our very own liked and disliked actors.</p>
+<p>We could also parameterize which of the stereotype evaluation we’d want to use for graph creation. Remember there were four such variables in the <code>sample.sav</code> dataset, two each for men and women and each gender was evaluated in view of warmth and competence.</p>
+</section>
+<section id="changing-setup-to-parameterized-report" class="level3" data-number="3.0.8">
+<h3 data-number="3.0.8" class="anchored" data-anchor-id="changing-setup-to-parameterized-report"><span class="header-section-number">3.0.8</span> Changing setup to parameterized report</h3>
+<p>To work with parameters, we first need to define what these are in the <code>yaml</code> of the <code>rmarkdown</code> document.</p>
+<div id="fig-autom5" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autom5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/example-autom5.png" class="lightbox" data-glightbox="description: .lightbox-desc-10" data-gallery="quarto-lightbox-gallery-10"><img src="img/example-autom5.png" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autom5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.10: Modified yaml header for paramtereized reports in .Rmd
+</figcaption>
+</figure>
+</div>
+<p>In <a href="#fig-autom5" class="quarto-xref">Figure&nbsp;<span>3.10</span></a>, I highlighted brownish the modification from the previous <code>.Rmd</code> file. Throughout the code lines 5–18, we’ve added two parameters (<code>actor</code> and <code>stereotype</code>) to the <code>rmarkdown</code> document, which are introduced by the <code>yaml</code> attribute <code>params:</code>. These parameters are assigned to objects that can be used in <code>r</code> as seen in the code chunk at lines 36–42.</p>
+<div id="fig-autom6" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autom6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/example-autom6.png" class="lightbox" data-glightbox="description: .lightbox-desc-11" data-gallery="quarto-lightbox-gallery-11"><img src="img/example-autom6.png" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autom6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.11: Modified code for paramterized reports in .Rmd modified
+</figcaption>
+</figure>
+</div>
+<p>To accommodate parameters in the previously written code, we need to make some small modifications to the code as seen in <a href="#fig-autom6" class="quarto-xref">Figure&nbsp;<span>3.11</span></a>. Red arrows point to the exact location of parameters in the modified code.</p>
+<div id="tip-dfmodif" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;3.4: Dataframe modification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note in <a href="#fig-autom5" class="quarto-xref">Figure&nbsp;<span>3.10</span></a> (or <a href="#fig-autom6" class="quarto-xref">Figure&nbsp;<span>3.11</span></a> for that matter) that we’ve slightly modified the dataframe so that it gets easier to pass it through parameterization. See lines 91–93 where we’ve modified the data structure to long format.</p>
+</div>
+</div>
+</section>
+<section id="knitting-the-document" class="level3" data-number="3.0.9">
+<h3 data-number="3.0.9" class="anchored" data-anchor-id="knitting-the-document"><span class="header-section-number">3.0.9</span> Knitting the document</h3>
+<p><code>knit</code>-ing a document with parameters is as simple as 1-2-3.</p>
+<div id="fig-autom7" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autom7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/example-autom7.png" class="lightbox" data-glightbox="description: .lightbox-desc-12" data-gallery="quarto-lightbox-gallery-12"><img src="img/example-autom7.png" class="img-fluid figure-img" style="width:55.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autom7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.12: Knit with parameters
+</figcaption>
+</figure>
+</div>
+<p>Once the parameterized <code>rmarkdown</code> is built, we can <code>knit</code> it with parameters as show in <a href="#fig-autom7" class="quarto-xref">Figure&nbsp;<span>3.12</span></a>.</p>
+<p>Nagvigate to the <code>knit</code> button as indicated by the red arrow, open the drop-down menu and from there select “knit with parameters” and following, a window as indicated in <a href="#fig-autom7" class="quarto-xref">Figure&nbsp;<span>3.12</span></a> will appear.</p>
+<p>We recognize the two parameters we set up above in the <code>yaml</code> header and used throughout the code: “Actor” and “Stereotype evaluation”. Note that these are changeble parameter traits meaning that in the <code>yaml</code> header we can use the attribute <code>label</code> to re-label as per our preference.</p>
+<p>We have set the attribute <code>input: select</code> in both cases to indicate how the parameter behaves. With <code>input: select</code>, we indicate a list of choices to the parameter from which we can then select only one (case of <code>stereotype</code>) or multiple (case of <code>actor</code>).</p>
+</section>
+<section id="something-to-do-by-yourself" class="level3" data-number="3.0.10">
+<h3 data-number="3.0.10" class="anchored" data-anchor-id="something-to-do-by-yourself"><span class="header-section-number">3.0.10</span> Something to do by yourself</h3>
+<p>Going back to the “Knit with Parameters” window, all the choices we have pre-programmed will appear here. This also mean that if we want to add something, we can simply add it to the <code>yaml</code> header and the <code>r</code> code will automatically recognize it. Beautiful, clean, and easy.</p>
+<p>Play with the “Knit with Parameters” a bit. You could, for example, add to the list of actors <strong>Timothee Chalamet</strong> while deleting one of the other actors. See what happens in the window and in the <code>knit</code>-ed output document.</p>
+<p>To make things a bit more advanced, open the Microsoft Excel file and add new entries making sure you follow the preset format. Update as desired the choice list in the <code>yaml</code> header and then knit using parameters. What output do you get?</p>
+</section>
+<section id="another-table-example" class="level3" data-number="3.0.11">
+<h3 data-number="3.0.11" class="anchored" data-anchor-id="another-table-example"><span class="header-section-number">3.0.11</span> Another table example</h3>
+<p>One other way to work with parameterized reports is to code the document such that it creates tables (or anything else for that matter) using a specific dataset. Basically, if the dataset format is identical but contains different <em>N</em> sizes or was collected by different teams or at different times, then parameterized reports can facilitate the creation of repeated reports at a button’s click.</p>
+<p>Remember, we first need to set up the new parameter in the <code>yaml</code> header. Try it yourself following the steps above and then use the code below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we assign the parameter sampledf to an object sampledf </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># containing the dataset itself</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># we use paste0() function to integrate the parameter into a string object</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># that tells r where to find the dataset in the .Rproj (the file path) </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>sampledf<span class="ot">&lt;-</span><span class="fu">paste0</span>(<span class="st">"data/"</span>,params<span class="sc">$</span>sampledf)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>sampledf</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>abc<span class="ot">&lt;-</span>haven<span class="sc">::</span><span class="fu">read_sav</span>(sampledf)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(abc) <span class="co"># shows the first lines in the data frame</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(abc) <span class="co"># shows the n size of the data frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assign parameterized data to an object dataframe</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>abc <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">remove_all_labels</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">contains</span>(<span class="st">"warm"</span>) <span class="sc">|</span> <span class="fu">contains</span>(<span class="st">"comp"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">%&gt;%</span> <span class="co"># we group by variable name created previously (background step)</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># we use missing remove (na.rm)</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd=</span><span class="fu">sd</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">min=</span><span class="fu">min</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">max=</span><span class="fu">max</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="advanced-resources" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="advanced-resources">Advanced resources</h2>
+<p>In this day and age, technology evolves with mind-blowing speeds. This makes it hard to always keep up. Such happens also with the universe of tools available in <code>r</code>.</p>
+<section id="towards-shiny-apps" class="level3" data-number="3.0.12">
+<h3 data-number="3.0.12" class="anchored" data-anchor-id="towards-shiny-apps"><span class="header-section-number">3.0.12</span> Towards shiny apps</h3>
+<p>Paramterized reports use a shiny user interface. We will cover <code>shiny apps</code> in <a href="apps.html" class="quarto-xref"><span>Chapter 5</span></a>. But for now be as creative as possible.</p>
+<p>For example, think of a nice graph you could build plotting the age of study participants and their stereotypical evaluation of men and women in terms of warmth and competence. Use the <code>sample.sav</code> or the shorter datasets we created previously.</p>
+<p>Create a new parameter <code>age</code> having the <code>input: slider</code> attribute. An example of how to do it is given <a href="https://bookdown.org/yihui/rmarkdown/params-knit.html">here</a>. Either follow that example or try doing it by yourself.</p>
+</section>
+<section id="quarto" class="level3" data-number="3.0.13">
+<h3 data-number="3.0.13" class="anchored" data-anchor-id="quarto"><span class="header-section-number">3.0.13</span> Quarto</h3>
+<p>Building on <code>rmakrdown</code> et co., the relative <code>quarto</code> is making everything much, much easier. Once the basics of <code>rmarkdown</code> are secured, the transition to <code>quarto</code> is extremely smooth.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>What is <code>quarto</code> and what makes it so advantageous? See for yourself <a href="https://quarto.org/docs/gallery/">here</a>.</p>
+<p>Use <code>quarto</code> to create presentation slides using the <code>revealjs</code> format. Start from <a href="https://quarto.org/docs/presentations/revealjs/">here</a>.</p>
+<div id="tip-qppt" class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;3.5: Presentations in Quarto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Build on the code we’ve covered so far. Write text, dynamic text from data, and incorporate images in your presentation slides created in Quarto.</p>
+</div>
+</div>
+
+
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;3.1: Create your first RMarkdown file</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3.2: RMarkdown document</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;3.3: </span>
+<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;3.4: Knited bike cover</span>
+<span class="glightbox-desc lightbox-desc-6">Figure&nbsp;3.5: Example .Rmd file</span>
+<span class="glightbox-desc lightbox-desc-7">Figure&nbsp;3.6: Live paragraph in .Rmd</span>
+<span class="glightbox-desc lightbox-desc-8">Figure&nbsp;3.8: Automated graphs</span>
+<span class="glightbox-desc lightbox-desc-9">Figure&nbsp;3.9: Code for tables in .Rmd</span>
+<span class="glightbox-desc lightbox-desc-10">Figure&nbsp;3.10: Modified yaml header for paramtereized reports in .Rmd</span>
+<span class="glightbox-desc lightbox-desc-11">Figure&nbsp;3.11: Modified code for paramterized reports in .Rmd modified</span>
+<span class="glightbox-desc lightbox-desc-12">Figure&nbsp;3.12: Knit with parameters</span>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Stanciuetal2017" class="csl-entry" role="listitem">
+Stanciu, A., C. J. Cohrs, K. Hanke, and A. Gavreliuc. 2017. <span>“Within-Culture Variation in the Content of Stereotypes: Application and Development of the Stereotype Content Model in an Eastern European Culture.”</span> <em>The Journal of Social Psychology</em> 157 (5): 611–28. <a href="https://doi.org/10.1080/00224545.2016.1262812">https://doi.org/10.1080/00224545.2016.1262812</a>.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>RMarkdown is by now old generation. The new generation is <code>quarto</code>, covered in <a href="publish.html" class="quarto-xref"><span>Chapter 4</span></a>, which keeps all the RMarkdown traits while it simplifies even more the user-experience.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>We cover <code>quarto</code> begining with <a href="publish.html" class="quarto-xref"><span>Chapter 4</span></a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./runiv.html" class="pagination-link" aria-label="R universe">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R universe</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./publish.html" class="pagination-link" aria-label="Self-publish">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Self-publish</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ CC BY-NC license
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","selector":".lightbox","openEffect":"zoom","closeEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
+
+
+
+</body></html>

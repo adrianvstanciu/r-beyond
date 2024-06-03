@@ -1,0 +1,65 @@
+project:
+  type: book
+
+book:
+  title: "R beyond data analysis"
+  date: last-modified
+  cover-image: img\logo.jpg
+  favicon: img\logo.jpg
+  author: 
+    - name: Adrian Stanciu
+      url: https://adrianstanciu.eu/
+      affiliation: FHSE, University of Luxembourg
+      affiliation-url: https://www.uni.lu/fhse-en/
+  sharing: [linkedin, twitter]
+  downloads: pdf
+  abstract: "You might know `r` from data analysis. 
+  But, `r` can do much more than that for you! 
+  This short book supports the seminar with the same title offered by 
+  [Asst. Prof. Adrian Stanciu](https://www.uni.lu/fhse-en/people/adrian-stanciu/)
+  at University of Luxembourg."
+  description: "Course material for the seminar."
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - runiv.qmd
+    - autom.qmd
+    - publish.qmd
+    - apps.qmd
+    - outro.qmd
+    - author.qmd
+    - references.qmd
+  page-footer:
+    center:
+      - text: "CC BY-NC license"
+  sidebar:
+    pinned: true
+    tools:
+      - icon: save
+        menu:
+          - text: Stereotype data .sav
+            url: "data/sample.sav"
+          - text: Actor data .xlsx
+            url: "mat/movies.xlsx"
+          - text: Examples .rmd
+            url: "mat/Examples rmd.zip"
+          - text: Example book
+            url: "mat/Example book.zip"
+          - text: Example shiny 
+            url: "mat/Example shiny.zip"
+
+citation: true
+google-scholar: true
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+
+
+

@@ -1,0 +1,333 @@
+# Self-publish {#sec-publish}
+
+![](img/selfpublish.jpg){.lightbox width=50% fig-align="center"}
+
+Publishing content online is very easy today. One can use WordPress and similar platforms to create a website, blogs and so on. 
+
+Why, then, use `r` to publish content online? 
+
+Through _R_ we can create websites and online books that we can store on online repositories like `GitHub` and maintain a high degree of control over the structure, contents, and visibility of the website/ book. Moreover, self-publishing using `r` is one way to integrate varying work-routines towards a greater goal -- that of communicating own research, consultancy job involving data science, to name just a few examples. 
+
+If you work with data that comes from your data collection efforts or you use secondary data (publically available data), then self-publishing content online through `r` can facilitate the integration of data analysis and content creation steps.
+
+For this section, we will use `quarto` to create both websites and books. Using `quarto` is a step forward from other approaches (`quarto` is a new generation RMarkdown document), including the way the present book was rendered - using the old generation RMarkdown files.  
+
+## Prepping Quarto {-}
+
+`Quarto` is a new generation `RMarkdown`. It retains all the functions of the RMarkdown files from before while it enhances and simplifies several other work flows. Basically, `Quarto` makes it much much much easier for everyone to create presentations, live documents, websites, books and so on. 
+
+One can even integrate `shiny` functionality into `Quarto` documents. For the present seminar, however, we will introduce `shiny apps` as separate tools (see @sec-apps).
+
+See the official `quarto` website [here](https://quarto.org/).
+
+To create content using `quarto` we need:
+
+1 - `r`, which we download and install as described in @sec-runiv.
+
+2 - `RStudio`, which we download and install as described in @sec-runiv.
+
+3 - `Quarto`, which can be downloaded [here](https://quarto.org/docs/get-started/) and installed following the indicated steps. Make sure you choose the installation package that suits your operating system.
+
+After you've successfully installed `r`, `RStudio`, and `quarto` on your computer, we can start with creating websites and books. 
+
+## Website {-}
+
+In @sec-autom, we've seen that working in `Rproj` simplifies the work flow including, for example, presetting path dependencies relative to the project folder.
+
+:::{#fig-qwebsite layout-ncol=2}
+
+![Step 1](img/qweb1.png){.lightbox width=75% #fig-step1qweb}
+
+![Step 2](img/qweb2.png){.lightbox width=75% #fig-step2qweb}
+
+Steps to creating a Quarto Website project
+:::
+
+We will use the logic of projects here (and for books) as well. Open `RStudio` and create a new project `Quarto website`. See @fig-qwebsite.
+
+When you create the project, there will be several files created by default: `.qmd`, `.yml`, `.css` as well as a folder "_site". The files and folder already contain the fundamental structure of a working website.
+
+To open this default website on your local computer, navigate inside the folder "_site" and open on your Internet browser the `.html`^[`.html` files are specific types of file that are used online] file `index.html`. 
+
+Every website (and online book) has such an `index.html` file. This file indexes the other files composing the website (or book). 
+
+### .qmd
+
+![Basic structure of a .qmd file](img/index.png){.lightbox width=75% #fig-indexqmd}
+
+We can see the by now familiar structure including the yaml header at lines 1-3, the r code chunk at lines 9-11 and the static text.
+
+:::{.callout-tip #tip-qmd}
+## Quarto markdown
+`.qmd` is the new generation `.Rmd`
+:::
+
+We can also see the `Render` button on the upper bar where the `knit` button would be in an old generation RMarkdown file. 
+
+We can edit this file in virtually identical manner to any other `.Rmd` file. I say virtually identically because the `.qmd` file comes with extra benefits making it easier to control the formatting of content on the page. One can easily implement some `.html` features such as `div` using the `:::{}` blocks^[Some div blocks require four : instead of three, for example ::::{}. Additional : indicate therefore upper levels of div code embededdness.]. Read more on the basics of `.qmd` [here](https://quarto.org/docs/output-formats/html-basics.html). 
+
+![Two columns using div blocks](img/qcolmn.png){.lightbox width=75% #fig-qcolmn}
+
+See for example how a two columned format looks like in @fig-qcolmn. Include it in your `.qmd` file and then render it. See how it looks.
+
+### .yml
+
+![Elements of the .yml file](img/qyml.png){.lightbox width=75% #fig-qyml}
+
+Three elements are observable when opening the default `.yml` file: `project`, `website`, and `format`. See @fig-qyml.
+
+First, the element `project` defines the type of the project you work one. It can be a website as well as a book.
+
+Second, the element `website` defines attributes of the website. In @fig-qyml we can see attributes "title" and "navbar". `title` allows us to give a title to the website. `navbar` is short for navigation bar. Let us look a bit closer at it.
+
+Inside `navbar` there is an element `left` which defines the positioning of the navigation bar. It can also be right, for example. On the `navbar` we then place the individual pages - which are none other the `html` renditions of the `.qmd` files. We see two ways to place these individual pages. 
+
+One is where we give a custom label to the page: see lines 8 and 9. Another where we use the default label that derives from the title of the individual page (remember that each RMarkdown file has a yaml header and so has every .qmd file).
+
+:::{#tip-navbar .callout-tip}
+## Listing all the individual pages
+
+Remember to list in the `navbar` all the individual pages you'd like to be rendered in the final website. Otherwise, the website will not contain them!
+:::
+
+Third, the element `format` allows us to format the website overall including, for example, a theme, css (cascading style sheets) or even add a table of contents (toc). `theme`, `css` and `toc` and attributes of the `html` document. Remember from @sec-autom the concept of parameters? Well, that is pretty much the logic here as well - these three are parameters of the html file that we can modify according to our needs. This means that there are multiple themes we can choose from and we can write our very own `.css` style. We may decide to include a `toc` or not. 
+
+:::{.callout-tip #tip-qthemes}
+## Further html themes
+
+Select from [this](https://quarto.org/docs/output-formats/html-themes.html) list of quarto html themes the one you'd prefer
+:::
+
+### .css
+
+The default `.css` file is empty. I would say that css is rather advanced so I won't cover it here. Typically, one can create custom css styles for their website or can download templates from the Internet. Be aware however what you download and from where.
+
+For the purpose of this seminar the default `.css` is more than enough.
+
+### _site folder
+
+This folder is created by default. It is the containing folder of the rendered html files and other elements required for the final website.
+
+For the purpose of this seminar, this folder is important for us because it contains the `index.html` file. By opening it on our browser, we can inspect locally the rendered website.
+
+### Deployment
+
+Once you've created and locally inspected your website, the next step is to deploy it (publish) it online. Remember from @sec-intro that we would need an online repository like `GitHub` and, most importantly, to have an open and encrypted channel connecting the local machine and the server. 
+
+One other way to publish your site is through [quartopub.com](https://quartopub.com/). Open an account on quartopub.com. We will deploy the website using these two ways: `GitHub` and `quartopub.com`. I will describe a bit why you might want to choose one or the other. 
+
+#### Via quartopub
+
+This is a very simple way to deploy your website online. It is integrated seamlessly with `quarto` so you only need two lines of code in the Terminal. Really.
+
+First, we need to render the website. To link together all the files that we've created/ edited included the `.qmd`, `.yml` and `.css`. 
+
+Copy the line below into the Terminal of your website project and run it.
+
+```{r,echo=TRUE,eval=FALSE}
+quarto render
+```
+
+Next, we can publish it via quartopub provided that we have opened an account. 
+
+Copy the line below into the Terminal of your website project and run it.
+
+```{r,echo=TRUE,eval=FALSE}
+quarto publish quarto-pub
+```
+
+You will notice some code running and finally that in the project folder there is a new yml file created `_publish.yml`. If you open it, you will notice among other the URL to your newly and publicly available website.
+
+With this approach you deploy the website on a remote server and your files remain available for editing only locally on your machine. You also need to make sure that you render the website after each modification to files making up the website.
+
+The created example is published through `quarto pub` [here](https://adrian-stanciu.quarto.pub/example-website/).
+
+#### Via GitHub Pages
+
+In some situations you might want to deploy the website and upload the files comprising the website on a remote repository. This means that your files can be made publicly available for other to clone them or they are available to you in the "cloud". The website itself is deployed and everybody can access it but in addition everyone can have access to the files that create the website.
+
+This approach might be preferable when you maintain a website as a group. Or when you create a fancy website together with colleagues from across the globe.
+
+I wrote a step-by-step guide explanation for older generation RMarkdown. This can be accessed [here](https://adrianstanciu.eu/sitedummy.html).
+
+Returning to Quarto Website and assuming that a `GitHub` account has been created, you may follow the steps [here](https://quarto.org/docs/publishing/github-pages.html). A summary of the steps are provided below:
+
+1 - Create a `Quarto Website` project on your local machine.
+
+2 - Make the folder containing the `quarto` website a `git` repository^[In @sec-intro we covered the set up of GitHub and repositories including installing a suite of code. Make sure that is done before attempting to create the folder a `git` repository.].
+
+```{r,echo=TRUE,eval=FALSE}
+git init
+```
+
+
+3 - Create an empty repository on your `GitHub` account. Then, connect the local repository to the newly created online repository.
+
+```{r,echo=TRUE,eval=FALSE}
+remote add origin git@github.com:{your github user}/{your repository where the website will be hosted}.git
+```
+
+4 - We will deploy the website by rendering it to a sub-folder docs. To do this we need to modify the `_quarto.yml` document. Open the `.yml` file, copy the following line and paste it as a sub-element to "project". This new line should be intended and be aligned with the "type: website" element! Save and close the `.yml` file.
+
+```{r,echo=TRUE,eval=FALSE}
+output-dir: docs
+```
+
+5 - Create a `.nojekyll` file to the repository. Explanation is given [here](https://quarto.org/docs/publishing/github-pages.html). Go to the Terminal of the website project and run the code line:
+
+Mac/ Linux
+```{r,echo=TRUE,eval=FALSE}
+touch .nojekyll
+```
+
+Windows
+```{r,echo=TRUE,eval=FALSE}
+copy NUL .nojekyll
+```
+
+6 - Render the website. Note that the website will be automatically rendered in the sub-folder `docs`.
+
+```{r,echo=TRUE,eval=FALSE}
+quarto render
+```
+
+7 - We push everything to our `GitHub` repository. 
+
+```{r,echo=TRUE,eval=FALSE}
+git add .
+git commit -m "Push website"
+git push
+```
+
+8 - Check that the push was successful. 
+
+![Contents of the created GitHub repository](img/repocheck.png){.lightbox width=75% #fig-repocheck}
+
+Go on your `GitHub` account, open the repository and it should look something like @fig-repocheck.
+
+9 - Setup `GitHub` to "read" the website from the sub-folder `docs`. 
+
+![Setup for deployment from main/docs](img/deploydocs.png){.lightbox width=75% #fig-deploydocs}
+
+Navigate to Settings/ Pages and change under "Build and deployment" the branch and folder according to @fig-deploydocs. Save changes.
+
+10 - A visit site panel will appear shortly, after the website has been rendered and created, like in @fig-deploydocs. This may take between a few seconds and a couple of minutes depending on the server availability. Refresh the page and the website is now publicly accessible.
+
+11 - Now you can repeat steps 6 through 8 every time you edited or modified contents for your website. The website itself will be updated automatically (might take a couple of minutes though).
+
+The created example is published via `GitHub pages` [here](https://adrianstanciu.eu/example/)^[Note that I am using a custom domain at the root of which is my personal website. In your case it would have a slightly different domain but the website itself will look similar to the example shown.].
+
+:::{.callout-tip #tip-customdomain}
+## Custom domains
+You can publish your website (or book, as we will see in the next section) on a custom domain. For this you'd need to pay a monthly or yearly fee. 
+
+See for details this [ultra-brief guide](https://adrianstanciu.eu/sitedummy.html#2_The_personalized_one) I wrote some time ago but still remains valid.
+:::
+
+## Online book {-}
+
+To start with Quarto Books, we should first create such a project. The steps are similar to creating a Quarto Website.^[As a matter of fact, you might have noticed by now that creating an R project is this simple. You can follow these steps also when creating for example a presentation or a publishable manuscript.]
+
+:::{#fig-qbook layout-ncol=2}
+
+![Step 1](img/qbook1.png){.lightbox width=75% #fig-step1qbook}
+
+![Step 2](img/qbook2.png){.lightbox width=75% #fig-step2qbook}
+
+Steps to creating a Quarto Book project
+:::
+
+When you create the project (see @fig-qbook), there will be several files created by default: `.qmd`, `.yml`, `.bib` as well as a folder "_book". The files and folder already contain the fundamental structure of a renderable book.
+
+To open this default book on your local computer, navigate inside the folder "_book" and open on your Internet browser the `index.html`. 
+
+### .qmd
+
+See sub-section on .qmd for creating websites. 
+
+If you feel comfortable, create some content for the book, for example, add a chapter about yourself. 
+
+### .yml
+
+This file type is identical to the one for creating websites. But, there are different attributes addressed! See @fig-ymlbook.
+
+![Attributes of the .yml file for books](img/ymlbook.png){.lightbox width=55% #fig-ymlbook}
+
+First to notice, is that now the project we create is `type: book`. We have learned from the website deployment section that, if we wanted, we could deploy the book via `GitHub Pages`. That is why I already added the `output-dir: docs` in @fig-ymlbook.
+
+Lines 5 through 13 hold attributes of the book. Remember that for the website, we had specified attributes for website. So, at line 4 in @fig-qyml we had `website: ` followed by attributes whereas at line 5 in @fig-ymlbook we have `book: ` followed by several attributes.
+
+In our example, we have four book attributes including a title, author, publication date and chapters. For a comprehensive list of book attributes see [here](https://quarto.org/docs/reference/projects/books.html).
+
+:::{.callout-tip #tip-bookchapt}
+## List all the chapters!
+
+Remember to list under `chapters: ` all the `.qmd` chapters you'd want to render to the final book. Otherwise these are not included. Note also that the order of chapters is defined here.
+:::
+
+At line 15, we see the `bibliography: ` entry. We will cover this shortly. But, this element is relevant for books and publishable manuscripts alike. It renders to the final document a `.bib` file that contains references. 
+
+At lines 17 through 21, we see the `format: ` element, which is similar to website creation. Next to the familiar `.html` format, we now see also `.pdf` format. This means that we can render the book both in html and pdf formats! Other formats are likewise possible, for instance, `.epub` which are for e-readers. 
+
+:::{.callout-tip #tip-pdfbook}
+## PDF of your book
+You may inspect the PDF version of your book by navigating inside the "_book" (or "docs", depending on the output-directory indicated in the `.yml` file) folder provided, of course, that you first rendered the book using, for example, the code line `quarto render`.
+:::
+
+### .bib
+
+The `.bib` file format is otherwise said what makes it possible to integrate citations to your book or publishable documents as part of the workflow. `.bib` files are a type of plain text files (no hyperlinks or enhanced fields that are typical in standard text editors like Microsoft Word).
+
+![Example of reference in `.bib` format](img/bibfile.png){.lightbox width=55% #fig-bib}
+
+Read more on using `.bib` reference files [here](https://www.overleaf.com/learn/latex/Bibliography_management_with_bibtex).
+
+Many journals offer the possibility to download a `.bib` citation of their articles. For example, navigate to this article [@Conneretal1998](https://onlinelibrary.wiley.com/doi/abs/10.1111/J.1559-1816.1998.TB01685.X) published at Journal of Applied Social Psychology (open access). Identify the `TOOLS` button, press it, and navigate to `Export Citation` where you can download a BibTex (`.bib`) citation ready to be incorporated in your reference file.
+
+One can use online tools for transforming plain text citations into `.bib` citation format. For example, [this converter](https://asouqi.github.io/bibtex-converter/). Use this if you have a plain text list of references and you'd want them transferred into a `.bib` file.
+
+So, in our case, as shown in @fig-ymlbook at line 15, we specify `bibliography: references.bib` meaning that the bibliography for the book should be constructed through rendering from the file `references.bib`.
+
+### Deployment 
+
+#### Via quartopub
+
+Book deployment is almost identical with the deployment of websites. 
+
+The easiest option is to deploy through `quarto pub`. To do this, we only need to do the following:
+
+1 - Make sure we have opened an account on [quarto.com](https://quartopub.com/)
+
+2 - render the book using the line code below (identical to the one used for websites)
+
+```{r,echo=TRUE,eval=FALSE}
+quarto render
+```
+
+It may take a couple of seconds until the book is rendered. And, if it is the first time you render a qurto book it may take a bit until the necessary dependencies are installed. 
+
+3 - Publish the book using one line of code.
+
+```{r,echo=TRUE,eval=FALSE}
+quarto publish quarto-pub
+```
+
+The example book was published online through `quarto.pub` [here](https://adrian-stanciu.quarto.pub/example-book/).
+
+#### Via GitHub Pages
+
+The example book was published online via `GitHub pages` [here](https://adrianstanciu.eu/example-book/). Similar to the website example, the book is attributed to my personal website.
+
+## Advanced resources {-}
+
+There are some alternatives out there, for example:
+
+- To create a blog using the `blogdown` package. See a step-by-step [guide](https://www.shilaan.com/post/building-your-website-using-r-blogdown/) by **Shilaan Alzahawi**.
+
+- To create a website using the `distill` package. See a [guide](https://www.shilaan.com/post/building-your-website-using-r-blogdown/) by **Sally A.M. Hogenboom**. 
+
+- A more comprenesive guide to creating a website using `r` and `RStudio` is provided in this [eBook](https://r4sites-book.netlify.app/) by **Danny Morris**.
+
+- A different (using older generation RMarkdown) way to self-publish books online using `r` package `bookdown`. See [this guide](https://bookdown.org/yihui/bookdown/publishing.html) by **Yihui Xie** who basically (co-)created all of this that we are covering throughout the seminar.
+
+Last, but not least. With `quarto`, one can publish even articles. That is right, one can write using `r` publishable manuscripts. Start [here](https://quarto.org/docs/manuscripts/) and [see here the journals](https://quarto.org/docs/journals/) that already support manuscript submission of `quarto` templates. This is the cherry on top of the cake in view open and transparent science.

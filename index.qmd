@@ -1,0 +1,29 @@
+# Preface {.unnumbered}
+
+```{r setup, include=FALSE,results='asis'}
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE,message = FALSE)
+
+r <- getOption("repos")
+r["CRAN"] <-"https://cloud.r-project.org/"
+options(repos=r)
+
+options(scipen = 999) # displays scientific notations for very large numbers (eg 20000 x 10^4)
+
+library(tidyverse)
+library(shiny)
+library(rmarkdown)
+library(bookdown)
+```
+
+# {-}
+
+The book is divided into several chapters as follows:
+
+- Chapter @sec-intro: This is an introduction to the purpose and mission of this seminar, and provides useful information to get one started.
+- Chapter @sec-runiv: This part is a gentle introduction in the `r` universe.
+- Chapter @sec-autom: This part addresses the notion of automatization of workflows.
+- Chapter @sec-publish: This part provides tips on self-publishing content online.
+- Chapter @sec-apps: This part introduces shiny-apps as tools for communicating research output.
+- Chapter @sec-outro: This is an overview of the learned material and contains some tips for individual work.
+
+To illustrate the benefits of working with _R_ beyond data analysis while transitioning to a holistic work flow, we will build on an example that evolves throughout the chapters @sec-autom--@sec-apps. 

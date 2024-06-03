@@ -1,0 +1,15 @@
+{
+  "hash": "9ec5f1b95b7e0aac1ff2d16f88b4727b",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# About the author {-}\n\n![](img/stanciu.png){.lightbox width=50% fig-align=\"center\"}\n\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![](img/stanciu.png){fig-align='center' width=50%}\n:::\n:::\n\n\n[Dr. Adrian STANCIU](https://www.uni.lu/fhse-en/people/adrian-stanciu/) is assistant professor in lifespan developmental psychology (focus on adult development and digitization) at the University of Luxembourg. He studies how through digital technologies the life quality and health of older migrants can be improved and sustained longterm. He is likewise researching on human values, mental health, and methodology of assessment, often in international collaborations and in an interdisciplinary approach.",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
